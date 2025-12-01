@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -62,13 +63,21 @@ func execute(operations []Operation) int {
 		if dial == ZERO_DIAL {
 			zero_counter++
 		}
-		fmt.Println(dial)
+		//		fmt.Println(dial)
 	}
 	return zero_counter
 }
 
+func loadInput() string {
+	dat, err := os.ReadFile("input/day1.txt")
+	if err != nil {
+		panic(err)
+	}
+	return string(dat)
+}
+
 func main() {
-	dial := Dial(0)
-	dial = right(dial, Dial(12))
-	fmt.Println(dial)
+	operations := parseInput(loadInput())
+	zero_counter := execute(operations)
+	fmt.Println(zero_counter)
 }
