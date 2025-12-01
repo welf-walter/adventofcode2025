@@ -4,22 +4,26 @@ import (
 	"testing"
 )
 
-func TestRight(t *testing.T) {
-	dial := Dial(2)
-	dial = right(dial, Dial(12))
-	if dial != 14 {
-		t.Errorf("Expected 14 but got %v", dial)
+func TestRotate(t *testing.T) {
+	dial := Dial(11)
+	dial = right(dial, Dial(8))
+	if dial != 19 {
+		t.Errorf("Expected 19 but got %v", dial)
 	}
-	dial = right(dial, Dial(112))
-	if dial != 26 {
-		t.Errorf("Expected 26 but got %v", dial)
+	dial = left(dial, Dial(19))
+	if dial != 0 {
+		t.Errorf("Expected 0 but got %v", dial)
 	}
 }
 
-func TestLeft(t *testing.T) {
-	dial := Dial(2)
-	dial = left(dial, Dial(12))
-	if dial != 90 {
-		t.Errorf("Expected 90 but got %v", dial)
+func TestRotateCircle(t *testing.T) {
+	dial := Dial(0)
+	dial = left(dial, Dial(1))
+	if dial != 99 {
+		t.Errorf("Expected 99 but got %v", dial)
+	}
+	dial = right(dial, Dial(1))
+	if dial != 0 {
+		t.Errorf("Expected 0 but got %v", dial)
 	}
 }
