@@ -40,6 +40,10 @@ L99
 R14
 L82`
 	operations := parseInput(input)
+	if len(operations) != 10 {
+		t.Errorf("Expected %v but got %v", 10, len(operations))
+	}
+
 	exp1 := Operation{direction: LEFT, ticks: Dial(30)}
 	if operations[1] != exp1 {
 		t.Errorf("Expected %v but got %v", exp1, operations[1])
@@ -47,5 +51,10 @@ L82`
 	exp2 := Operation{direction: RIGHT, ticks: Dial(48)}
 	if operations[2] != exp2 {
 		t.Errorf("Expected %v but got %v", exp1, operations[2])
+	}
+
+	zero_count := execute(operations)
+	if zero_count != 3 {
+		t.Errorf("Expected 3 but got %v", zero_count)
 	}
 }

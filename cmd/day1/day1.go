@@ -6,9 +6,10 @@ import (
 	"strings"
 )
 
-type Dial int8
+type Dial int
 
 const START_DIAL = Dial(50)
+const ZERO_DIAL = Dial(0)
 
 type Operation struct {
 	direction byte
@@ -38,7 +39,7 @@ func parseInput(input string) []Operation {
 	operations := []Operation{}
 	lines := strings.Split(input, "\n")
 	for _, line := range lines {
-		ticks, _ := strconv.Atoi(line[1:len(line)])
+		ticks, _ := strconv.Atoi(line[1:])
 		operation := Operation{
 			direction: line[0],
 			ticks:     Dial(ticks),
@@ -46,6 +47,24 @@ func parseInput(input string) []Operation {
 		operations = append(operations, operation)
 	}
 	return operations
+}
+
+func execute(operations []Operation) int {
+	zero_counter := 0
+	dial := START_DIAL
+	for _, operation := range operations {
+		if operation.direction == RIGHT {
+			dial = right(dial, operation.ticks)
+		}
+		if operation.direction == LEFT {
+			dial = left(dial, operation.ticks)
+		}
+		if dial == ZERO_DIAL {
+			zero_counter++
+		}
+		fmt.Println(dial)
+	}
+	return zero_counter
 }
 
 func main() {
