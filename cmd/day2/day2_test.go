@@ -33,13 +33,13 @@ func TestIsInvalid2(t *testing.T) {
 	assert := assert.New(t)
 
 	assert.True(isInvalid2(12341234))
-	assert.False(isInvalid2(123123123))
+	assert.True(isInvalid2(123123123))
 	assert.True(isInvalid2(1212121212))
 	assert.True(isInvalid2(1111111))
 
 }
 
-func TestSumInvalidIds(t *testing.T) {
+func TestSumInvalidIds1(t *testing.T) {
 	assert := assert.New(t)
 
 	assert.Equal(int64(11+22), sumInvalidIds(parseRange("11-22"), isInvalid1))
@@ -56,5 +56,25 @@ func TestSumInvalidIds(t *testing.T) {
 
 	ranges := parseInput(input1)
 	assert.Equal(int64(1227775554), sumInvalidIdsOfRanges(ranges, isInvalid1))
+
+}
+
+func TestSumInvalidIds2(t *testing.T) {
+	assert := assert.New(t)
+
+	assert.Equal(int64(11+22), sumInvalidIds(parseRange("11-22"), isInvalid2))
+	assert.Equal(int64(99+111), sumInvalidIds(parseRange("95-115"), isInvalid2))
+	assert.Equal(int64(999+1010), sumInvalidIds(parseRange("998-1012"), isInvalid2))
+	assert.Equal(int64(1188511885), sumInvalidIds(parseRange("1188511880-1188511890"), isInvalid2))
+	assert.Equal(int64(222222), sumInvalidIds(parseRange("222220-222224"), isInvalid2))
+	assert.Equal(int64(0), sumInvalidIds(parseRange("1698522-1698528"), isInvalid2))
+	assert.Equal(int64(446446), sumInvalidIds(parseRange("446443-446449"), isInvalid2))
+	assert.Equal(int64(38593859), sumInvalidIds(parseRange("38593856-38593862"), isInvalid2))
+	assert.Equal(int64(565656), sumInvalidIds(parseRange("565653-565659"), isInvalid2))
+	assert.Equal(int64(824824824), sumInvalidIds(parseRange("824824821-824824827"), isInvalid2))
+	assert.Equal(int64(2121212121), sumInvalidIds(parseRange("2121212118-2121212124"), isInvalid2))
+
+	ranges := parseInput(input1)
+	assert.Equal(int64(4174379265), sumInvalidIdsOfRanges(ranges, isInvalid2))
 
 }

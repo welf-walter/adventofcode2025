@@ -22,5 +22,5 @@ out/day2: out cmd/day2
 	echo "### Testing Day 2 ###"
 	go test adventofcode/year2025/cmd/day2
 	echo "### Running Day 2 ###"
-	go run cmd/day2/day2.go   # while developing
-#	go run cmd/day2/day2.go > out/day1	# when done
+#	go run cmd/day2/day2.go   # while developing
+	go run cmd/day2/day2.go > out/day2	# when done
