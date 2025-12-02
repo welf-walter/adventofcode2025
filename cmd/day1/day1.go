@@ -20,20 +20,24 @@ type Operation struct {
 const LEFT = 'L'
 const RIGHT = 'R'
 
-func right(dial Dial, ticks Dial) Dial {
+func right(dial Dial, ticks Dial) (Dial, int) {
 	new := dial + ticks
+	zerocrosses := 0
 	for new >= 100 {
 		new = new - 100
+		zerocrosses++
 	}
-	return new
+	return new, zerocrosses
 }
 
-func left(dial Dial, ticks Dial) Dial {
+func left(dial Dial, ticks Dial) (Dial, int) {
 	new := dial - ticks
+	zerocrosses := 0
 	for new < 0 {
 		new = new + 100
+		zerocrosses++
 	}
-	return new
+	return new, zerocrosses
 }
 
 func parseInput(input string) []Operation {
@@ -50,22 +54,34 @@ func parseInput(input string) []Operation {
 	return operations
 }
 
-func execute(operations []Operation) int {
-	zero_counter := 0
+func execute(operations []Operation) (int, int) {
+	zero_counter1 := 0
+	zero_counter2 := 0
 	dial := START_DIAL
 	for _, operation := range operations {
+		crossed := 0
 		if operation.direction == RIGHT {
-			dial = right(dial, operation.ticks)
-		}
-		if operation.direction == LEFT {
-			dial = left(dial, operation.ticks)
+			dial, crossed = right(dial, operation.ticks)
+			zero_counter2 += crossed
+		} else if operation.direction == LEFT {
+			was_zero := dial == 0
+			dial, crossed = left(dial, operation.ticks)
+			zero_counter2 += crossed
+			if was_zero {
+				zero_counter2--
+			}
+			if dial == ZERO_DIAL {
+				zero_counter2++
+			}
+		} else {
+			panic(fmt.Sprintf("Unexpected: %v", operation.direction))
 		}
 		if dial == ZERO_DIAL {
-			zero_counter++
+			zero_counter1++
 		}
 		//		fmt.Println(dial)
 	}
-	return zero_counter
+	return zero_counter1, zero_counter2
 }
 
 func loadInput() string {
@@ -78,6 +94,7 @@ func loadInput() string {
 
 func main() {
 	operations := parseInput(loadInput())
-	zero_counter := execute(operations)
-	fmt.Println(zero_counter)
+	zero_counter1, zero_counter2 := execute(operations)
+	fmt.Println(zero_counter1)
+	fmt.Println(zero_counter2)
 }
