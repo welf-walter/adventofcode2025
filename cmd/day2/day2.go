@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -68,6 +69,16 @@ func sumInvalidIdsOfRanges(ranges []Range) int64 {
 	return sum
 }
 
+func loadInput() string {
+	dat, err := os.ReadFile("input/day2.txt")
+	if err != nil {
+		panic(err)
+	}
+	return string(dat)
+}
+
 func main() {
-	fmt.Println("Hello, World!")
+	ranges := parseInput(loadInput())
+	sum := sumInvalidIdsOfRanges(ranges)
+	fmt.Println(sum)
 }
