@@ -11,25 +11,30 @@ type Range struct {
 	last  int
 }
 
+// parse "11-22"
+func parseRange(input string) Range {
+	parts := strings.Split(input, "-")
+	if len(parts) != 2 {
+		panic(input)
+	}
+	first, err1 := strconv.Atoi(parts[0])
+	if err1 != nil {
+		panic(err1)
+	}
+
+	last, err2 := strconv.Atoi(parts[1])
+	if err2 != nil {
+		panic(err2)
+	}
+
+	return Range{first, last}
+}
+
 func parseInput(input string) []Range {
 	ranges := []Range{}
 	ranges_str := strings.Split(input, ",")
 	for _, range_str := range ranges_str {
-		parts := strings.Split(range_str, "-")
-		if len(parts) != 2 {
-			panic(range_str)
-		}
-		first, err1 := strconv.Atoi(parts[0])
-		if err1 != nil {
-			panic(err1)
-		}
-
-		last, err2 := strconv.Atoi(parts[0])
-		if err2 != nil {
-			panic(err2)
-		}
-
-		ranges = append(ranges, Range{first, last})
+		ranges = append(ranges, parseRange(range_str))
 	}
 	return ranges
 }
@@ -43,6 +48,16 @@ func isInvalid(id int) bool {
 	left := str[0 : l/2]
 	right := str[l/2:]
 	return left == right
+}
+
+func sumInvalidIds(r Range) int64 {
+	sum := int64(0)
+	for id := r.first; id <= r.last; id++ {
+		if isInvalid(id) {
+			sum += int64(id)
+		}
+	}
+	return sum
 }
 
 func main() {
