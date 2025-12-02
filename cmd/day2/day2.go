@@ -32,8 +32,8 @@ func parseRange(input string) Range {
 
 func parseInput(input string) []Range {
 	ranges := []Range{}
-	ranges_str := strings.Split(input, ",")
-	for _, range_str := range ranges_str {
+	ranges_iter := strings.SplitSeq(input, ",")
+	for range_str := range ranges_iter {
 		ranges = append(ranges, parseRange(range_str))
 	}
 	return ranges
