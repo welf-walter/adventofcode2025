@@ -100,6 +100,8 @@ func loadInput() string {
 
 func main() {
 	ranges := parseInput(loadInput())
-	sum := sumInvalidIdsOfRanges(ranges, isInvalid1)
-	fmt.Println(sum)
+	sum1 := sumInvalidIdsOfRanges(ranges, isInvalid1)
+	fmt.Println(sum1)
+	sum2 := sumInvalidIdsOfRanges(ranges, isInvalid2)
+	fmt.Println(sum2)
 }
