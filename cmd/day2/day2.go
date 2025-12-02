@@ -53,6 +53,25 @@ func isInvalid1(id int) bool {
 	return left == right
 }
 
+func isInvalid2(id int) bool {
+	str := strconv.Itoa(id)
+	for l := 1; l <= len(str)/2; l++ {
+		allequal := true
+		for r := 1 * l; r+l < len(str); r++ {
+			left := str[0:l]
+			right := str[r : r+l]
+			if left != right {
+				allequal = false
+				break
+			}
+		}
+		if allequal {
+			return true
+		}
+	}
+	return false
+}
+
 func sumInvalidIds(r Range, isInvalid InvalidyFunction) int64 {
 	sum := int64(0)
 	for id := r.first; id <= r.last; id++ {

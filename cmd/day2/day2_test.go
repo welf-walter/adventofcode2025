@@ -29,6 +29,16 @@ func TestIsInvalid1(t *testing.T) {
 
 }
 
+func TestIsInvalid2(t *testing.T) {
+	assert := assert.New(t)
+
+	assert.True(isInvalid2(12341234))
+	assert.False(isInvalid2(123123123))
+	assert.True(isInvalid2(1212121212))
+	assert.True(isInvalid2(1111111))
+
+}
+
 func TestSumInvalidIds(t *testing.T) {
 	assert := assert.New(t)
 
