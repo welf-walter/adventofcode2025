@@ -40,7 +40,9 @@ func parseInput(input string) []Range {
 	return ranges
 }
 
-func isInvalid(id int) bool {
+type InvalidyFunction func(id int) bool
+
+func isInvalid1(id int) bool {
 	str := strconv.Itoa(id)
 	l := len(str)
 	if l%2 != 0 {
@@ -51,7 +53,7 @@ func isInvalid(id int) bool {
 	return left == right
 }
 
-func sumInvalidIds(r Range) int64 {
+func sumInvalidIds(r Range, isInvalid InvalidyFunction) int64 {
 	sum := int64(0)
 	for id := r.first; id <= r.last; id++ {
 		if isInvalid(id) {
@@ -61,10 +63,10 @@ func sumInvalidIds(r Range) int64 {
 	return sum
 }
 
-func sumInvalidIdsOfRanges(ranges []Range) int64 {
+func sumInvalidIdsOfRanges(ranges []Range, isInvalid InvalidyFunction) int64 {
 	sum := int64(0)
 	for _, r := range ranges {
-		sum += sumInvalidIds(r)
+		sum += sumInvalidIds(r, isInvalid)
 	}
 	return sum
 }
@@ -79,6 +81,6 @@ func loadInput() string {
 
 func main() {
 	ranges := parseInput(loadInput())
-	sum := sumInvalidIdsOfRanges(ranges)
+	sum := sumInvalidIdsOfRanges(ranges, isInvalid1)
 	fmt.Println(sum)
 }
