@@ -44,4 +44,7 @@ func TestSumInvalidIds(t *testing.T) {
 	assert.Equal(int64(0), sumInvalidIds(parseRange("824824821-824824827")))
 	assert.Equal(int64(0), sumInvalidIds(parseRange("2121212118-2121212124")))
 
+	ranges := parseInput(input1)
+	assert.Equal(int64(1227775554), sumInvalidIdsOfRanges(ranges))
+
 }

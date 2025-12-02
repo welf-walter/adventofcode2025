@@ -60,6 +60,14 @@ func sumInvalidIds(r Range) int64 {
 	return sum
 }
 
+func sumInvalidIdsOfRanges(ranges []Range) int64 {
+	sum := int64(0)
+	for _, r := range ranges {
+		sum += sumInvalidIds(r)
+	}
+	return sum
+}
+
 func main() {
 	fmt.Println("Hello, World!")
 }
