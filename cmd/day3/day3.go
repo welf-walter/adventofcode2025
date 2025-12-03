@@ -1,6 +1,7 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
 	"fmt"
 	"strconv"
 	"strings"
@@ -54,5 +55,7 @@ func sumLargestPairs(banks []Bank) int {
 }
 
 func main() {
-	fmt.Println("Not yet implemented")
+	banks := parseInput(util.LoadInput(3))
+	sum := sumLargestPairs(banks)
+	fmt.Println(sum)
 }
