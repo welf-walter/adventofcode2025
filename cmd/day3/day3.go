@@ -72,6 +72,7 @@ func sumLargestJoltage(banks []Bank, digits int) int {
 	sum := 0
 	for _, bank := range banks {
 		sum += int(findLargestJoltage(bank, digits))
+		fmt.Print(".")
 	}
 	return sum
 }
@@ -79,5 +80,7 @@ func sumLargestJoltage(banks []Bank, digits int) int {
 func main() {
 	banks := parseInput(util.LoadInput(3))
 	sum := sumLargestJoltage(banks, 2)
+	fmt.Println(sum)
+	sum = sumLargestJoltage(banks, 4)
 	fmt.Println(sum)
 }
