@@ -38,6 +38,13 @@ func Test1(t *testing.T) {
 
 }
 
+func TestHelpers(t *testing.T) {
+	assert := assert.New(t)
+
+	assert.True(isBankBetter(parseLine("4321"), parseLine("1234")))
+
+}
+
 func TestOnAllBanks(t *testing.T) {
 	assert := assert.New(t)
 

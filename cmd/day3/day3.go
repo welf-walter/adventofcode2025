@@ -54,8 +54,25 @@ func calcBank(bank Bank) int {
 	return val
 }
 
+func isBankBetter(bank1 Bank, bank2 Bank) bool {
+	if len(bank1) != len(bank2) {
+		panic(fmt.Sprintf("%v -- %v", bank1, bank2))
+	}
+	for i := 0; i < len(bank1); i++ {
+		if bank1[i] > bank2[i] {
+			return true
+		}
+		if bank1[i] < bank2[i] {
+			return false
+		}
+	}
+	panic("Both are equal")
+}
+
 func findLargestJoltage(bank Bank, digits int) int {
 
+	// for each Joltage, remove it and check is the bank is then the best
+	//bestBank
 	largest := 0
 	//dumpBank := func(subbank Bank) { fmt.Printf("%v\n", bank) }
 	findMaxBank := func(subbank Bank) {
