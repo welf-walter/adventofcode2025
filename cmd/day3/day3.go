@@ -77,29 +77,33 @@ func isBankBetter(bank1 Bank, bank2 Bank) bool {
 }
 
 func drop(bank Bank, index int) Bank {
-	return append(bank[:index], bank[index+1:]...)
+	// this does not work!! return append(bank[:index], bank[index+1:]...)
+	new := Bank{}
+	for i := range bank {
+		if i != index {
+			new = append(new, bank[i])
+		}
+	}
+	return new
 }
 
 func findLargestJoltage(bank Bank, digits int) Bank {
 
-	fmt.Printf("%v: %v\n", digits, bank)
+	//	fmt.Printf("%v: %v\n", digits, bank)
 	// for each Joltage, remove it and check is the bank is then the best
 	bestBank := Bank(nil)
 	for i := 0; i < len(bank); i++ {
-		droppedOne := bank
-		droppedOne = append(droppedOne[:i], droppedOne[i+1:]...)
+		droppedOne := drop(bank, i)
 
-		// this does not work!?!
-		//droppedOne := append(bank[:i], bank[i+1:]...)
-		fmt.Printf("    %v: %v\n", i, droppedOne)
+		//		fmt.Printf("    %v: %v\n", i, droppedOne)
 		if isBankBetter(droppedOne, bestBank) {
-			fmt.Printf("  better\n")
+			//fmt.Printf("  better\n")
 			bestBank = droppedOne
 		}
 	}
-	fmt.Printf("%v: %v\n\n", digits, bestBank)
+	//fmt.Printf("%v: %v\n\n", digits, bestBank)
 
-	if digits == len(bank) {
+	if digits == len(bestBank) {
 		return bestBank
 	} else {
 		return findLargestJoltage(bestBank, digits)

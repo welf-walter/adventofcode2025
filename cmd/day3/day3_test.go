@@ -29,10 +29,10 @@ func Test1(t *testing.T) {
 	assert.Equal(Joltage(8), banks[3][2])
 	assert.Equal(98, calcBank(Bank{Joltage(9), Joltage(8)}))
 
-	assert.Equal(98, findLargestJoltage(banks[0], 2))
-	assert.Equal(89, findLargestJoltage(banks[1], 2))
-	assert.Equal(78, findLargestJoltage(banks[2], 2))
-	assert.Equal(92, findLargestJoltage(banks[3], 2))
+	assert.Equal(98, calcBank(findLargestJoltage(banks[0], 2)))
+	assert.Equal(89, calcBank(findLargestJoltage(banks[1], 2)))
+	assert.Equal(78, calcBank(findLargestJoltage(banks[2], 2)))
+	assert.Equal(92, calcBank(findLargestJoltage(banks[3], 2)))
 
 	assert.Equal(98+89+78+92, sumLargestJoltage(banks, 2))
 
@@ -86,10 +86,10 @@ func Test2(t *testing.T) {
 
 	banks := parseInput(input1)
 
-	assert.Equal(987654321111, findLargestJoltage(banks[0], 12))
-	assert.Equal(811111111119, findLargestJoltage(banks[1], 12))
-	assert.Equal(434234234278, findLargestJoltage(banks[2], 12))
-	assert.Equal(888911112111, findLargestJoltage(banks[3], 12))
+	assert.Equal(987654321111, calcBank(findLargestJoltage(banks[0], 12)))
+	assert.Equal(811111111119, calcBank(findLargestJoltage(banks[1], 12)))
+	assert.Equal(434234234278, calcBank(findLargestJoltage(banks[2], 12)))
+	assert.Equal(888911112111, calcBank(findLargestJoltage(banks[3], 12)))
 
 	assert.Equal(3121910778619, sumLargestJoltage(banks, 12))
 
