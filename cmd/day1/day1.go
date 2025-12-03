@@ -1,8 +1,8 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -60,10 +60,11 @@ func execute(operations []Operation) (int, int) {
 	dial := START_DIAL
 	for _, operation := range operations {
 		crossed := 0
-		if operation.direction == RIGHT {
+		switch operation.direction {
+		case RIGHT:
 			dial, crossed = right(dial, operation.ticks)
 			zero_counter2 += crossed
-		} else if operation.direction == LEFT {
+		case LEFT:
 			was_zero := dial == 0
 			dial, crossed = left(dial, operation.ticks)
 			zero_counter2 += crossed
@@ -73,7 +74,7 @@ func execute(operations []Operation) (int, int) {
 			if dial == ZERO_DIAL {
 				zero_counter2++
 			}
-		} else {
+		default:
 			panic(fmt.Sprintf("Unexpected: %v", operation.direction))
 		}
 		if dial == ZERO_DIAL {
@@ -84,16 +85,8 @@ func execute(operations []Operation) (int, int) {
 	return zero_counter1, zero_counter2
 }
 
-func loadInput() string {
-	dat, err := os.ReadFile("input/day1.txt")
-	if err != nil {
-		panic(err)
-	}
-	return string(dat)
-}
-
 func main() {
-	operations := parseInput(loadInput())
+	operations := parseInput(util.LoadInput(1))
 	zero_counter1, zero_counter2 := execute(operations)
 	fmt.Println(zero_counter1)
 	fmt.Println(zero_counter2)

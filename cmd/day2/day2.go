@@ -1,8 +1,8 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -99,16 +99,8 @@ func sumInvalidIdsOfRanges(ranges []Range, isInvalid InvalidyFunction) int64 {
 	return sum
 }
 
-func loadInput() string {
-	dat, err := os.ReadFile("input/day2.txt")
-	if err != nil {
-		panic(err)
-	}
-	return string(dat)
-}
-
 func main() {
-	ranges := parseInput(loadInput())
+	ranges := parseInput(util.LoadInput(2))
 	sum1 := sumInvalidIdsOfRanges(ranges, isInvalid1)
 	fmt.Println(sum1)
 	sum2 := sumInvalidIdsOfRanges(ranges, isInvalid2)
