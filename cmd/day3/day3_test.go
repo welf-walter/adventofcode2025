@@ -63,3 +63,17 @@ func TestOnAllBanks(t *testing.T) {
 	assert.Equal([]int{1234}, vals)
 
 }
+
+func Test2(t *testing.T) {
+	assert := assert.New(t)
+
+	banks := parseInput(input1)
+
+	assert.Equal(987654321111, findLargestJoltage(banks[0], 12))
+	assert.Equal(811111111119, findLargestJoltage(banks[1], 12))
+	assert.Equal(434234234278, findLargestJoltage(banks[2], 12))
+	assert.Equal(888911112111, findLargestJoltage(banks[3], 12))
+
+	assert.Equal(3121910778619, sumLargestJoltage(banks, 12))
+
+}
