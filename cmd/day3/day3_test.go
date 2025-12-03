@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert" // https://pkg.go.dev/github.com/stretchr/testify/assert
@@ -26,12 +27,39 @@ func Test1(t *testing.T) {
 	banks := parseInput(input1)
 	assert.Equal(4, len(banks))
 	assert.Equal(Joltage(8), banks[3][2])
+	assert.Equal(98, calcBank(Bank{Joltage(9), Joltage(8)}))
 
-	assert.Equal(Pair(98), findLargestPair(banks[0]))
-	assert.Equal(Pair(89), findLargestPair(banks[1]))
-	assert.Equal(Pair(78), findLargestPair(banks[2]))
-	assert.Equal(Pair(92), findLargestPair(banks[3]))
+	assert.Equal(98, findLargestPair(banks[0]))
+	assert.Equal(89, findLargestPair(banks[1]))
+	assert.Equal(78, findLargestPair(banks[2]))
+	assert.Equal(92, findLargestPair(banks[3]))
 
 	assert.Equal(98+89+78+92, sumLargestPairs(banks))
+
+}
+
+func TestOnAllBanks(t *testing.T) {
+	assert := assert.New(t)
+
+	vals := []int{}
+	collectBank := func(bank Bank) {
+		fmt.Printf("%v\n", bank)
+		vals = append(vals, calcBank(bank))
+	}
+
+	onAllSubbanks(Bank{}, parseLine("1234"), 1, collectBank)
+	assert.Equal([]int{1, 2, 3, 4}, vals)
+
+	vals = []int{}
+	onAllSubbanks(Bank{}, parseLine("1234"), 2, collectBank)
+	assert.Equal([]int{12, 13, 14, 23, 24, 34}, vals)
+
+	vals = []int{}
+	onAllSubbanks(Bank{}, parseLine("1234"), 3, collectBank)
+	assert.Equal([]int{123, 124, 134, 234}, vals)
+
+	vals = []int{}
+	onAllSubbanks(Bank{}, parseLine("1234"), 4, collectBank)
+	assert.Equal([]int{1234}, vals)
 
 }

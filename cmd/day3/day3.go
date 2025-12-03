@@ -9,7 +9,6 @@ import (
 
 type Joltage int
 type Bank []Joltage
-type Pair int
 
 func parseLine(line string) Bank {
 	jolts := make([]Joltage, len(line))
@@ -33,16 +32,40 @@ func parseInput(input string) []Bank {
 	return banks
 }
 
-func findLargestPair(bank Bank) Pair {
-	largest := Pair(-1)
-	for i := 0; i < len(bank); i++ {
-		for j := i + 1; j < len(bank); j++ {
-			pair := Pair(int(bank[i])*10 + int(bank[j]))
-			if largest < pair {
-				largest = pair
-			}
+func onAllSubbanks(prefix Bank, rest Bank, toadd int, yield func(subbank Bank)) {
+	if toadd == 0 {
+		yield(prefix)
+		return
+	}
+	if len(rest) == 0 {
+		return
+	}
+	// take it
+	onAllSubbanks(append(prefix, rest[0]), rest[1:], toadd-1, yield)
+	// or leave it
+	onAllSubbanks(prefix, rest[1:], toadd, yield)
+}
+
+func calcBank(bank Bank) int {
+	val := 0
+	for _, joltage := range bank {
+		val = val*10 + int(joltage)
+	}
+	return val
+}
+
+func findLargestPair(bank Bank) int {
+	//func findLargestJoltage(bank Bank, digits int) Joltage {
+
+	largest := 0
+	//dumpBank := func(subbank Bank) { fmt.Printf("%v\n", bank) }
+	findMaxBank := func(subbank Bank) {
+		val := calcBank(subbank)
+		if largest < val {
+			largest = val
 		}
 	}
+	onAllSubbanks(Bank{}, bank, 2, findMaxBank)
 	return largest
 }
 
