@@ -27,4 +27,9 @@ func Test1(t *testing.T) {
 	assert.Equal(4, len(banks))
 	assert.Equal(Joltage(8), banks[3][2])
 
+	assert.Equal(Pair(98), findLargestPair(banks[0]))
+	assert.Equal(Pair(89), findLargestPair(banks[1]))
+	assert.Equal(Pair(78), findLargestPair(banks[2]))
+	assert.Equal(Pair(92), findLargestPair(banks[3]))
+
 }

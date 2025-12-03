@@ -8,6 +8,7 @@ import (
 
 type Joltage int
 type Bank []Joltage
+type Pair int
 
 func parseLine(line string) Bank {
 	jolts := make([]Joltage, len(line))
@@ -29,6 +30,19 @@ func parseInput(input string) []Bank {
 		banks = append(banks, parseLine(bank_str))
 	}
 	return banks
+}
+
+func findLargestPair(jolts []Joltage) Pair {
+	largest := Pair(-1)
+	for i := 0; i < len(jolts); i++ {
+		for j := i + 1; j < len(jolts); j++ {
+			pair := Pair(int(jolts[i])*10 + int(jolts[j]))
+			if largest < pair {
+				largest = pair
+			}
+		}
+	}
+	return largest
 }
 
 func main() {
