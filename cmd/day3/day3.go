@@ -32,17 +32,25 @@ func parseInput(input string) []Bank {
 	return banks
 }
 
-func findLargestPair(jolts []Joltage) Pair {
+func findLargestPair(bank Bank) Pair {
 	largest := Pair(-1)
-	for i := 0; i < len(jolts); i++ {
-		for j := i + 1; j < len(jolts); j++ {
-			pair := Pair(int(jolts[i])*10 + int(jolts[j]))
+	for i := 0; i < len(bank); i++ {
+		for j := i + 1; j < len(bank); j++ {
+			pair := Pair(int(bank[i])*10 + int(bank[j]))
 			if largest < pair {
 				largest = pair
 			}
 		}
 	}
 	return largest
+}
+
+func sumLargestPairs(banks []Bank) int {
+	sum := 0
+	for _, bank := range banks {
+		sum += int(findLargestPair(bank))
+	}
+	return sum
 }
 
 func main() {

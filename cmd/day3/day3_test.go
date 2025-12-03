@@ -32,4 +32,6 @@ func Test1(t *testing.T) {
 	assert.Equal(Pair(78), findLargestPair(banks[2]))
 	assert.Equal(Pair(92), findLargestPair(banks[3]))
 
+	assert.Equal(98+89+78+92, sumLargestPairs(banks))
+
 }
