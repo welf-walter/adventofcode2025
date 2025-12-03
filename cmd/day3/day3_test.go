@@ -42,6 +42,16 @@ func TestHelpers(t *testing.T) {
 	assert := assert.New(t)
 
 	assert.True(isBankBetter(parseLine("4321"), parseLine("1234")))
+	assert.True(isBankBetter(parseLine("4321"), nil))
+	assert.True(isBankBetter(parseLine("4321"), parseLine("4320")))
+	assert.False(isBankBetter(parseLine("4321"), parseLine("4321")))
+	assert.False(isBankBetter(parseLine("4321"), parseLine("4322")))
+	bank := parseLine("4321")
+	assert.Equal(parseLine("421"), drop(bank, 1))
+	assert.Equal(parseLine("321"), drop(bank, 0))
+	assert.Equal(parseLine("421"), drop(bank, 1))
+	assert.Equal(parseLine("431"), drop(bank, 2))
+	assert.Equal(parseLine("432"), drop(bank, 3))
 
 }
 

@@ -54,7 +54,13 @@ func calcBank(bank Bank) int {
 	return val
 }
 
+// is bank1 better than bank2
 func isBankBetter(bank1 Bank, bank2 Bank) bool {
+	// ein wurstbrot ist besser als nix
+	if bank2 == nil {
+		return true
+	}
+
 	if len(bank1) != len(bank2) {
 		panic(fmt.Sprintf("%v -- %v", bank1, bank2))
 	}
@@ -66,29 +72,45 @@ func isBankBetter(bank1 Bank, bank2 Bank) bool {
 			return false
 		}
 	}
-	panic("Both are equal")
+	// "Both are equal"
+	return false
 }
 
-func findLargestJoltage(bank Bank, digits int) int {
+func drop(bank Bank, index int) Bank {
+	return append(bank[:index], bank[index+1:]...)
+}
 
+func findLargestJoltage(bank Bank, digits int) Bank {
+
+	fmt.Printf("%v: %v\n", digits, bank)
 	// for each Joltage, remove it and check is the bank is then the best
-	//bestBank
-	largest := 0
-	//dumpBank := func(subbank Bank) { fmt.Printf("%v\n", bank) }
-	findMaxBank := func(subbank Bank) {
-		val := calcBank(subbank)
-		if largest < val {
-			largest = val
+	bestBank := Bank(nil)
+	for i := 0; i < len(bank); i++ {
+		droppedOne := bank
+		droppedOne = append(droppedOne[:i], droppedOne[i+1:]...)
+
+		// this does not work!?!
+		//droppedOne := append(bank[:i], bank[i+1:]...)
+		fmt.Printf("    %v: %v\n", i, droppedOne)
+		if isBankBetter(droppedOne, bestBank) {
+			fmt.Printf("  better\n")
+			bestBank = droppedOne
 		}
 	}
-	onAllSubbanks(Bank{}, bank, digits, findMaxBank)
-	return largest
+	fmt.Printf("%v: %v\n\n", digits, bestBank)
+
+	if digits == len(bank) {
+		return bestBank
+	} else {
+		return findLargestJoltage(bestBank, digits)
+	}
+
 }
 
 func sumLargestJoltage(banks []Bank, digits int) int {
 	sum := 0
 	for _, bank := range banks {
-		sum += int(findLargestJoltage(bank, digits))
+		sum += calcBank(findLargestJoltage(bank, digits))
 		fmt.Print(".")
 	}
 	return sum
