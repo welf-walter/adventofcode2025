@@ -32,20 +32,6 @@ func parseInput(input string) []Bank {
 	return banks
 }
 
-func onAllSubbanks(prefix Bank, rest Bank, toadd int, yield func(subbank Bank)) {
-	if toadd == 0 {
-		yield(prefix)
-		return
-	}
-	if len(rest) == 0 {
-		return
-	}
-	// take it
-	onAllSubbanks(append(prefix, rest[0]), rest[1:], toadd-1, yield)
-	// or leave it
-	onAllSubbanks(prefix, rest[1:], toadd, yield)
-}
-
 func calcBank(bank Bank) int {
 	val := 0
 	for _, joltage := range bank {
@@ -92,7 +78,7 @@ func findLargestJoltage(bank Bank, digits int) Bank {
 	//	fmt.Printf("%v: %v\n", digits, bank)
 	// for each Joltage, remove it and check is the bank is then the best
 	bestBank := Bank(nil)
-	for i := 0; i < len(bank); i++ {
+	for i := range bank {
 		droppedOne := drop(bank, i)
 
 		//		fmt.Printf("    %v: %v\n", i, droppedOne)
