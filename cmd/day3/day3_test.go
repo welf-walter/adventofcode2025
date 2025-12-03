@@ -29,12 +29,12 @@ func Test1(t *testing.T) {
 	assert.Equal(Joltage(8), banks[3][2])
 	assert.Equal(98, calcBank(Bank{Joltage(9), Joltage(8)}))
 
-	assert.Equal(98, findLargestPair(banks[0]))
-	assert.Equal(89, findLargestPair(banks[1]))
-	assert.Equal(78, findLargestPair(banks[2]))
-	assert.Equal(92, findLargestPair(banks[3]))
+	assert.Equal(98, findLargestJoltage(banks[0], 2))
+	assert.Equal(89, findLargestJoltage(banks[1], 2))
+	assert.Equal(78, findLargestJoltage(banks[2], 2))
+	assert.Equal(92, findLargestJoltage(banks[3], 2))
 
-	assert.Equal(98+89+78+92, sumLargestPairs(banks))
+	assert.Equal(98+89+78+92, sumLargestJoltage(banks, 2))
 
 }
 

@@ -54,8 +54,7 @@ func calcBank(bank Bank) int {
 	return val
 }
 
-func findLargestPair(bank Bank) int {
-	//func findLargestJoltage(bank Bank, digits int) Joltage {
+func findLargestJoltage(bank Bank, digits int) int {
 
 	largest := 0
 	//dumpBank := func(subbank Bank) { fmt.Printf("%v\n", bank) }
@@ -65,20 +64,20 @@ func findLargestPair(bank Bank) int {
 			largest = val
 		}
 	}
-	onAllSubbanks(Bank{}, bank, 2, findMaxBank)
+	onAllSubbanks(Bank{}, bank, digits, findMaxBank)
 	return largest
 }
 
-func sumLargestPairs(banks []Bank) int {
+func sumLargestJoltage(banks []Bank, digits int) int {
 	sum := 0
 	for _, bank := range banks {
-		sum += int(findLargestPair(bank))
+		sum += int(findLargestJoltage(bank, digits))
 	}
 	return sum
 }
 
 func main() {
 	banks := parseInput(util.LoadInput(3))
-	sum := sumLargestPairs(banks)
+	sum := sumLargestJoltage(banks, 2)
 	fmt.Println(sum)
 }
