@@ -110,6 +110,6 @@ func main() {
 	banks := parseInput(util.LoadInput(3))
 	sum := sumLargestJoltage(banks, 2)
 	fmt.Println(sum)
-	sum = sumLargestJoltage(banks, 4)
+	sum = sumLargestJoltage(banks, 12)
 	fmt.Println(sum)
 }
