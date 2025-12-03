@@ -1,4 +1,4 @@
-all: out/day0 out/day1 out/day2
+all: out/day0 out/day1 out/day2 out/day3
 
 clean:
 	rm -rf out/
@@ -24,3 +24,10 @@ out/day2: out cmd/day2
 	echo "### Running Day 2 ###"
 #	go run cmd/day2/day2.go   # while developing
 	go run cmd/day2/day2.go > out/day2	# when done
+
+out/day3: out cmd/day3
+	echo "### Testing Day 3 ###"
+	go test adventofcode/year2025/cmd/day3
+	echo "### Running Day 3 ###"
+	go run cmd/day3/day3.go   # while developing
+#	go run cmd/day3/day3.go > out/day3	# when done
