@@ -121,4 +121,14 @@ func main() {
 	grid := parseInput(util.LoadInput(4))
 	counter := countForkliftAccessible(grid)
 	fmt.Println(counter)
+
+	sumcounter := 0
+	for counter > 0 {
+		positions := findForkliftAccessible(grid)
+		counter = len(positions)
+		log.Printf("Remove %v papers", counter)
+		removePapers(grid, positions)
+		sumcounter += counter
+	}
+	fmt.Println(sumcounter)
 }
