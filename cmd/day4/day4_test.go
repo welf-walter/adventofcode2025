@@ -33,4 +33,5 @@ func Test1(t *testing.T) {
 	grid := parseInput(example)
 	assert.True(isForkliftAccessible(grid, 0, 1))
 	assert.False(isForkliftAccessible(grid, 1, 1))
+	assert.Equal(13, countForkliftAccessible(grid))
 }

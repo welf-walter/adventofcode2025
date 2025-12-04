@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"strings"
 )
 
@@ -70,7 +71,23 @@ func isForkliftAccessible(grid Grid, x int, y int) bool {
 	if isPaper(grid, x+1, y+1) {
 		papers++
 	}
-	return papers <= 4
+	return papers < 4
+}
+
+func countForkliftAccessible(grid Grid) int {
+	counter := 0
+	for y := range grid {
+		gridline := grid[y]
+		for x := range gridline {
+			if gridline[x] {
+				if isForkliftAccessible(grid, x, y) {
+					counter++
+					log.Printf("Fork lift accessible at %v,%v", x, y)
+				}
+			}
+		}
+	}
+	return counter
 }
 
 func main() {
