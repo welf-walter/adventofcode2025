@@ -1,6 +1,7 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
 	"fmt"
 	"log"
 	"strings"
@@ -91,5 +92,7 @@ func countForkliftAccessible(grid Grid) int {
 }
 
 func main() {
-	fmt.Println("Not yet implemented")
+	grid := parseInput(util.LoadInput(4))
+	counter := countForkliftAccessible(grid)
+	fmt.Println(counter)
 }

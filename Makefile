@@ -26,7 +26,7 @@ out/day$(1): cmd/day$(1)/day$(1).go cmd/day$(1)/*
 	echo "### Testing Day $(1) ###"
 	go test adventofcode/year2025/cmd/day$(1)
 	echo "### Running Day $(1) ###"
-	go run $$< > $$@
+	go run $$< > $$@ 2> $$@.log
 	cat $$@
 endef
 
