@@ -1,33 +1,27 @@
-all: out/day0 out/day1 out/day2 out/day3
+#DAYS = 0 1 2 3
+DAYS = $(subst cmd/day,,$(wildcard cmd/day*))
 
+#test:
+#	echo $(DAYS)
+
+all: out/day0 out/day1 out/day2 out/day3
+	echo All days implemented: $(DAYS)
+
+.PHONY : clean
 clean:
 	rm -rf out/
 
 out:
 	mkdir out
 
-out/day0: out cmd/day0/day0.go
-	echo "### Running Day 0 ###"
-#	go run cmd/day0/day0.go   # while developing
-	go run cmd/day0/day0.go > out/day0	# when done
+# use variable $(1) day number
+define MAKEDAY
+out/day$(1): cmd/day$(1)/day$(1).go cmd/day$(1)/* out
+	echo "### Testing Day $(1) ###"
+	go test adventofcode/year2025/cmd/day$(1)
+	echo "### Running Day $(1) ###"
+	go run $$< > $$@
+	cat $$@
+endef
 
-out/day1: out cmd/day1/day1.go
-	echo "### Testing Day 1 ###"
-	go test adventofcode/year2025/cmd/day1
-	echo "### Running Day 1 ###"
-#	go run cmd/day1/day1.go   # while developing
-	go run cmd/day1/day1.go > out/day1	# when done
-
-out/day2: out cmd/day2
-	echo "### Testing Day 2 ###"
-	go test adventofcode/year2025/cmd/day2
-	echo "### Running Day 2 ###"
-#	go run cmd/day2/day2.go   # while developing
-	go run cmd/day2/day2.go > out/day2	# when done
-
-out/day3: out cmd/day3
-	echo "### Testing Day 3 ###"
-	go test adventofcode/year2025/cmd/day3
-	echo "### Running Day 3 ###"
-#	go run cmd/day3/day3.go   # while developing
-	go run cmd/day3/day3.go > out/day3	# when done
+$(foreach DAY,$(DAYS),$(eval $(call MAKEDAY,$(DAY))))
