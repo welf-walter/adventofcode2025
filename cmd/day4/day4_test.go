@@ -24,4 +24,13 @@ func TestParse(t *testing.T) {
 	assert.False(isPaper(grid, -1, 0))
 	assert.False(isPaper(grid, 0, -1))
 	assert.True(isPaper(grid, 0, 1))
+	assert.False(isPaper(grid, 1, 0))
+}
+
+func Test1(t *testing.T) {
+	assert := assert.New(t)
+
+	grid := parseInput(example)
+	assert.True(isForkliftAccessible(grid, 0, 1))
+	assert.False(isForkliftAccessible(grid, 1, 1))
 }

@@ -38,6 +38,41 @@ func isPaper(grid Grid, x int, y int) bool {
 	return gridline[x]
 }
 
+func isForkliftAccessible(grid Grid, x int, y int) bool {
+	papers := 0
+	if !isPaper(grid, x, y) {
+		panic("This function is expected to be run on a paper place")
+	}
+	if isPaper(grid, x-1, y-1) {
+		papers++
+	}
+	if isPaper(grid, x+0, y-1) {
+		papers++
+	}
+	if isPaper(grid, x+1, y-1) {
+		papers++
+	}
+
+	if isPaper(grid, x-1, y+0) {
+		papers++
+	}
+
+	if isPaper(grid, x+1, y+0) {
+		papers++
+	}
+
+	if isPaper(grid, x-1, y+1) {
+		papers++
+	}
+	if isPaper(grid, x+0, y+1) {
+		papers++
+	}
+	if isPaper(grid, x+1, y+1) {
+		papers++
+	}
+	return papers <= 4
+}
+
 func main() {
 	fmt.Println("Not yet implemented")
 }
