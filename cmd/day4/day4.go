@@ -91,6 +91,26 @@ func countForkliftAccessible(grid Grid) int {
 	return counter
 }
 
+type Position struct {
+	x int
+	y int
+}
+
+func findForkliftAccessible(grid Grid) []Position {
+	var positions []Position
+	for y := range grid {
+		gridline := grid[y]
+		for x := range gridline {
+			if gridline[x] {
+				if isForkliftAccessible(grid, x, y) {
+					positions = append(positions, Position{x, y})
+				}
+			}
+		}
+	}
+	return positions
+}
+
 func main() {
 	grid := parseInput(util.LoadInput(4))
 	counter := countForkliftAccessible(grid)

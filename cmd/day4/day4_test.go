@@ -35,3 +35,16 @@ func Test1(t *testing.T) {
 	assert.False(isForkliftAccessible(grid, 1, 1))
 	assert.Equal(13, countForkliftAccessible(grid))
 }
+
+func Test2(t *testing.T) {
+	assert := assert.New(t)
+
+	grid := parseInput(example)
+	positions := findForkliftAccessible(grid)
+
+	assert.Equal(countForkliftAccessible(grid), len(positions))
+	assert.Equal(Position{2, 0}, positions[0])
+	assert.Equal(Position{3, 0}, positions[1])
+	assert.Equal(Position{5, 0}, positions[2])
+
+}
