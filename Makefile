@@ -1,11 +1,17 @@
 #DAYS = 0 1 2 3
 DAYS = $(subst cmd/day,,$(wildcard cmd/day*))
+TARGETS = $(subst cmd/,out/,$(wildcard cmd/day*))
 
-#test:
-#	echo $(DAYS)
+# enable for a short test
+ifeq 'x' 'y'
+test:
+	echo $(TARGETS)
+	echo $(DAYS)
+endif
 
-all: out/day0 out/day1 out/day2 out/day3
+all: $(TARGETS) out
 	echo All days implemented: $(DAYS)
+	echo All targets: $(TARGETS)
 
 .PHONY : clean
 clean:
@@ -16,7 +22,7 @@ out:
 
 # use variable $(1) day number
 define MAKEDAY
-out/day$(1): cmd/day$(1)/day$(1).go cmd/day$(1)/* out
+out/day$(1): cmd/day$(1)/day$(1).go cmd/day$(1)/*
 	echo "### Testing Day $(1) ###"
 	go test adventofcode/year2025/cmd/day$(1)
 	echo "### Running Day $(1) ###"

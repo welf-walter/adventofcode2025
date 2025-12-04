@@ -37,3 +37,7 @@ func isPaper(grid Grid, x int, y int) bool {
 	}
 	return gridline[x]
 }
+
+func main() {
+	fmt.Println("Not yet implemented")
+}
