@@ -111,6 +111,12 @@ func findForkliftAccessible(grid Grid) []Position {
 	return positions
 }
 
+func removePapers(grid Grid, positions []Position) {
+	for _, pos := range positions {
+		grid[pos.y][pos.x] = false
+	}
+}
+
 func main() {
 	grid := parseInput(util.LoadInput(4))
 	counter := countForkliftAccessible(grid)

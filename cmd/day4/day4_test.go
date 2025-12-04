@@ -47,4 +47,40 @@ func Test2(t *testing.T) {
 	assert.Equal(Position{3, 0}, positions[1])
 	assert.Equal(Position{5, 0}, positions[2])
 
+	removePapers(grid, positions)
+
+	positions2 := findForkliftAccessible(grid)
+	assert.Equal(12, len(positions2))
+	removePapers(grid, positions2)
+
+	positions3 := findForkliftAccessible(grid)
+	assert.Equal(7, len(positions3))
+	removePapers(grid, positions3)
+
+	positions4 := findForkliftAccessible(grid)
+	assert.Equal(5, len(positions4))
+	removePapers(grid, positions4)
+
+	positions5 := findForkliftAccessible(grid)
+	assert.Equal(2, len(positions5))
+	removePapers(grid, positions5)
+
+	positions6 := findForkliftAccessible(grid)
+	assert.Equal(1, len(positions6))
+	removePapers(grid, positions6)
+
+	positions7 := findForkliftAccessible(grid)
+	assert.Equal(1, len(positions7))
+	removePapers(grid, positions7)
+
+	positions8 := findForkliftAccessible(grid)
+	assert.Equal(1, len(positions8))
+	removePapers(grid, positions8)
+
+	positions9 := findForkliftAccessible(grid)
+	assert.Equal(1, len(positions9))
+	removePapers(grid, positions9)
+
+	assert.Equal(0, countForkliftAccessible(grid))
+
 }
