@@ -3,6 +3,8 @@ package main
 import (
 	"adventofcode/year2025/cmd/util"
 	"fmt"
+	"log"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -63,6 +65,51 @@ func countFresh(ingredients []Ingredient, ranges []Range) (counter int) {
 			counter++
 		}
 	}
+	return
+}
+
+// convert 3-7 and 6-9 to 3-9
+// ok = false if not convertable
+func unionRange(r1 Range, r2 Range) (r Range, ok bool) {
+	// ***
+	//      ***
+	if r1.last+1 < r2.first {
+		return Range{0, 0}, false
+	}
+	//      ***
+	// ***
+	if r1.first-1 > r2.last {
+		return Range{0, 0}, false
+	}
+	// ********
+	//    *******
+	return Range{min(r1.first, r2.first), max(r1.last, r2.last)}, true
+}
+
+func condenseRanges(ranges []Range) (condensed []Range) {
+	log.Printf("In: %v\n", ranges)
+	cmp := func(a, b Range) int { return int(a.first) - int(b.first) }
+	slices.SortFunc(ranges, cmp)
+
+	log.Printf("Sorted: %v\n", ranges)
+	for _, r := range ranges {
+		if len(condensed) > 0 {
+			last := condensed[len(condensed)-1]
+			union, ok := unionRange(r, last)
+			if ok {
+				condensed[len(condensed)-1] = union
+			} else {
+				condensed = append(condensed, r)
+			}
+
+		} else {
+			condensed = []Range{r}
+		}
+		log.Printf("   %v\n", condensed)
+	}
+
+	log.Printf("Out: %v\n", condensed)
+
 	return
 }
 
