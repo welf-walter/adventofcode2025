@@ -113,6 +113,13 @@ func condenseRanges(ranges []Range) (condensed []Range) {
 	return
 }
 
+func sumRanges(ranges []Range) (sum int) {
+	for _, r := range ranges {
+		sum += int(r.last - r.first + 1)
+	}
+	return
+}
+
 func main() {
 	ranges, ingredients := parseInput(util.LoadInput(5))
 	counter := countFresh(ingredients, ranges)

@@ -57,4 +57,5 @@ func Test2(t *testing.T) {
 	assert.Equal(2, len(ranges))
 	assert.Equal(Range{Ingredient(3), Ingredient(5)}, ranges[0])
 	assert.Equal(Range{Ingredient(10), Ingredient(20)}, ranges[1])
+	assert.Equal(14, sumRanges(ranges))
 }
