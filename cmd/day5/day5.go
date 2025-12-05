@@ -45,3 +45,12 @@ func parseInput(input string) (ranges []Range, ingredients []Ingredient) {
 	}
 	return
 }
+
+func isFresh(ingredient Ingredient, ranges []Range) bool {
+	for _, r := range ranges {
+		if ingredient >= r.first && ingredient <= r.last {
+			return true
+		}
+	}
+	return false
+}

@@ -30,3 +30,18 @@ func TestParsing(t *testing.T) {
 	assert.Equal(Ingredient(17), ingredients[4])
 
 }
+
+func Test1(t *testing.T) {
+	assert := assert.New(t)
+
+	ranges, _ := parseInput(example)
+	isFresh := func(ingredient Ingredient) bool {
+		return isFresh(ingredient, ranges)
+	}
+	assert.False(isFresh(1))
+	assert.True(isFresh(5))
+	assert.False(isFresh(8))
+	assert.True(isFresh(11))
+	assert.True(isFresh(17))
+	assert.False(isFresh(32))
+}
