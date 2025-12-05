@@ -124,4 +124,9 @@ func main() {
 	ranges, ingredients := parseInput(util.LoadInput(5))
 	counter := countFresh(ingredients, ranges)
 	fmt.Println(counter)
+
+	// part 2
+	ranges = condenseRanges(ranges)
+	fmt.Println(sumRanges(ranges))
+
 }
