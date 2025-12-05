@@ -54,3 +54,12 @@ func isFresh(ingredient Ingredient, ranges []Range) bool {
 	}
 	return false
 }
+
+func countFresh(ingredients []Ingredient, ranges []Range) (counter int) {
+	for _, ingredient := range ingredients {
+		if isFresh(ingredient, ranges) {
+			counter++
+		}
+	}
+	return
+}
