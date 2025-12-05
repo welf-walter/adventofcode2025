@@ -1,6 +1,8 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -62,4 +64,10 @@ func countFresh(ingredients []Ingredient, ranges []Range) (counter int) {
 		}
 	}
 	return
+}
+
+func main() {
+	ranges, ingredients := parseInput(util.LoadInput(5))
+	counter := countFresh(ingredients, ranges)
+	fmt.Println(counter)
 }
