@@ -133,4 +133,6 @@ func sumSolvedProblems(problems []problem) (sum int) {
 func main() {
 	problems := parseInput(util.LoadInput(6))
 	fmt.Println(sumSolvedProblems(problems))
+	problems2 := parseInput2(util.LoadInput(6))
+	fmt.Println(sumSolvedProblems(problems2))
 }
