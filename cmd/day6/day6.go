@@ -74,3 +74,10 @@ func solveProblem(problem problem) int {
 		panic(problem.operator)
 	}
 }
+
+func sumSolvedProblems(problems []problem) (sum int) {
+	for _, p := range problems {
+		sum += solveProblem(p)
+	}
+	return
+}

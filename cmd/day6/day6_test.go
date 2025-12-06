@@ -29,4 +29,5 @@ func Test1(t *testing.T) {
 	assert.Equal(490, solveProblem(problems[1]))
 	assert.Equal(4243455, solveProblem(problems[2]))
 	assert.Equal(401, solveProblem(problems[3]))
+	assert.Equal(4277556, sumSolvedProblems(problems))
 }
