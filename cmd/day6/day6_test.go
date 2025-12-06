@@ -20,3 +20,13 @@ func TestParsing(t *testing.T) {
 	assert.Equal(problem{operands: []int{328, 64, 98}, operator: ADD}, problems[1])
 
 }
+
+func Test1(t *testing.T) {
+	assert := assert.New(t)
+	problems := parseInput(example)
+
+	assert.Equal(33210, solveProblem(problems[0]))
+	assert.Equal(490, solveProblem(problems[1]))
+	assert.Equal(4243455, solveProblem(problems[2]))
+	assert.Equal(401, solveProblem(problems[3]))
+}

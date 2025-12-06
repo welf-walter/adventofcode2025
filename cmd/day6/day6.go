@@ -51,3 +51,26 @@ func parseInput(input string) (problems []problem) {
 	}
 	return
 }
+
+func solveProblem(problem problem) int {
+	switch problem.operator {
+	case ADD:
+		{
+			sum := 0
+			for _, operand := range problem.operands {
+				sum += operand
+			}
+			return sum
+		}
+	case MULTIPLY:
+		{
+			product := 1
+			for _, operand := range problem.operands {
+				product *= operand
+			}
+			return product
+		}
+	default:
+		panic(problem.operator)
+	}
+}
