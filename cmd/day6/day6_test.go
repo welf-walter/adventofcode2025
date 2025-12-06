@@ -40,4 +40,11 @@ func Test2(t *testing.T) {
 	assert.Equal(problem{operands: []int{175, 581, 32}, operator: MULTIPLY}, problems[2])
 	assert.Equal(problem{operands: []int{8, 248, 369}, operator: ADD}, problems[1])
 	assert.Equal(problem{operands: []int{356, 24, 1}, operator: MULTIPLY}, problems[0])
+
+	assert.Equal(1058, solveProblem(problems[3]))
+	assert.Equal(3253600, solveProblem(problems[2]))
+	assert.Equal(625, solveProblem(problems[1]))
+	assert.Equal(8544, solveProblem(problems[0]))
+	assert.Equal(3263827, sumSolvedProblems(problems))
+
 }
