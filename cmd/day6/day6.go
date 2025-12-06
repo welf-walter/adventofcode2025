@@ -3,6 +3,7 @@ package main
 import (
 	"adventofcode/year2025/cmd/util"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -49,6 +50,51 @@ func parseInput(input string) (problems []problem) {
 				}
 				p++
 			}
+		}
+	}
+	return
+}
+
+func parseInput2(input string) (problems []problem) {
+	lines := strings.Split(input, "\n")
+	h := len(lines) - 1
+	w := len(lines[0])
+	for _, line := range lines {
+		w = max(w, len(line))
+	}
+
+	operatorLine := lines[h]
+	tokenIter := strings.SplitSeq(operatorLine, " ")
+	for token := range tokenIter {
+		switch token {
+		case "":
+		case string(ADD):
+			problems = append(problems, problem{operator: ADD})
+		case string(MULTIPLY):
+			problems = append(problems, problem{operator: MULTIPLY})
+		default:
+			panic(token)
+		}
+	}
+	log.Println(problems)
+
+	p := len(problems) - 1
+	for x := w - 1; x >= 0; x-- {
+		number := 0
+		for y := 0; y < h; y++ {
+			if x < len(lines[y]) {
+				c := lines[y][x]
+				digit, err := strconv.Atoi(string(c))
+				if err == nil {
+					number = number*10 + digit
+				}
+			}
+		}
+		if number > 0 {
+			log.Println(number)
+			problems[p].operands = append(problems[p].operands, number)
+		} else {
+			p--
 		}
 	}
 	return
