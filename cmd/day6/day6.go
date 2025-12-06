@@ -1,6 +1,8 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -80,4 +82,9 @@ func sumSolvedProblems(problems []problem) (sum int) {
 		sum += solveProblem(p)
 	}
 	return
+}
+
+func main() {
+	problems := parseInput(util.LoadInput(6))
+	fmt.Println(sumSolvedProblems(problems))
 }
