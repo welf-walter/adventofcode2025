@@ -90,4 +90,5 @@ func main() {
 	input := util.LoadInput(7)
 	start, rows := parseInput(input)
 	fmt.Println(runRows(start, rows))
+	fmt.Println(runRows2(start, rows))
 }
