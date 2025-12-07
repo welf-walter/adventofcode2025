@@ -65,6 +65,6 @@ func Test2(t *testing.T) {
 	t4 := runRow2(t3, rows[3])
 	assert.Equal(timeLine{5: 1, 7: 2, 9: 1}, t4)
 
-	//	assert.Equal(21, runRows(start, rows))
+	assert.Equal(40, runRows2(start, rows))
 
 }

@@ -72,6 +72,20 @@ func runRows(start int, splitterRows []splitterRow) int {
 	return sumSplits
 }
 
+func runRows2(start int, splitterRows []splitterRow) int {
+	t := timeLine{start: 1}
+	for _, row := range splitterRows {
+		t = runRow2(t, row)
+		log.Printf("Timeline = %v\n", t)
+	}
+
+	sumSplits := 0
+	for _, count := range t {
+		sumSplits += count
+	}
+	return sumSplits
+}
+
 func main() {
 	input := util.LoadInput(7)
 	start, rows := parseInput(input)
