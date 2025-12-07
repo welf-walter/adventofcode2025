@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"slices"
 	"strings"
 )
@@ -39,4 +40,15 @@ func runRow(tachyons []int, splitters splitterRow) (outTachyons []int, splitCoun
 		}
 	}
 	return
+}
+
+func runRows(start int, splitterRows []splitterRow) int {
+	sumSplits := 0
+	t := []int{start}
+	for _, row := range splitterRows {
+		t, splits := runRow(t, row)
+		log.Printf("Tachyons at %v, %v splits\n", t, splits)
+		sumSplits += splits
+	}
+	return sumSplits
 }

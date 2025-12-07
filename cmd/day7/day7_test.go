@@ -47,4 +47,6 @@ func Test1(t *testing.T) {
 	assert.Equal([]int{6, 8}, t2)
 	assert.Equal(1, splits2)
 
+	assert.Equal(21, runRows(start, rows))
+
 }
