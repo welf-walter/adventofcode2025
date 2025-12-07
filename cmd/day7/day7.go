@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"slices"
+	"strings"
+)
 
 type splitterRow []int
 
@@ -15,6 +18,25 @@ func parseInput(input string) (start int, splitterRows []splitterRow) {
 			}
 		}
 		splitterRows = append(splitterRows, row)
+	}
+	return
+}
+
+func runRow(tachyons []int, splitters splitterRow) (outTachyons []int, splitCount int) {
+	for _, t := range tachyons {
+		if slices.Contains(splitters, t) {
+			splitCount++
+			if !slices.Contains(outTachyons, t-1) {
+				outTachyons = append(outTachyons, t-1)
+			}
+			if !slices.Contains(outTachyons, t+1) {
+				outTachyons = append(outTachyons, t+1)
+			}
+		} else {
+			if !slices.Contains(outTachyons, t) {
+				outTachyons = append(outTachyons, t)
+			}
+		}
 	}
 	return
 }
