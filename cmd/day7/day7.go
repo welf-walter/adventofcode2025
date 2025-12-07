@@ -45,8 +45,9 @@ func runRow(tachyons []int, splitters splitterRow) (outTachyons []int, splitCoun
 func runRows(start int, splitterRows []splitterRow) int {
 	sumSplits := 0
 	t := []int{start}
+	var splits int
 	for _, row := range splitterRows {
-		t, splits := runRow(t, row)
+		t, splits = runRow(t, row)
 		log.Printf("Tachyons at %v, %v splits\n", t, splits)
 		sumSplits += splits
 	}
