@@ -10,6 +10,9 @@ import (
 
 type splitterRow []int
 
+// how many ways to get there?
+type timeLine map[int]int
+
 func parseInput(input string) (start int, splitterRows []splitterRow) {
 	lines := strings.Split(input, "\n")
 	start = strings.Index(lines[0], "S")
@@ -42,6 +45,19 @@ func runRow(tachyons []int, splitters splitterRow) (outTachyons []int, splitCoun
 		}
 	}
 	return
+}
+
+func runRow2(ti timeLine, splitters splitterRow) timeLine {
+	out := timeLine{}
+	for tachyon, ways := range ti {
+		if slices.Contains(splitters, tachyon) {
+			out[tachyon-1] += ways
+			out[tachyon+1] += ways
+		} else {
+			out[tachyon] += ways
+		}
+	}
+	return out
 }
 
 func runRows(start int, splitterRows []splitterRow) int {
