@@ -1,6 +1,8 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
+	"fmt"
 	"log"
 	"slices"
 	"strings"
@@ -52,4 +54,10 @@ func runRows(start int, splitterRows []splitterRow) int {
 		sumSplits += splits
 	}
 	return sumSplits
+}
+
+func main() {
+	input := util.LoadInput(7)
+	start, rows := parseInput(input)
+	fmt.Println(runRows(start, rows))
 }
