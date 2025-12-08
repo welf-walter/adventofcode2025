@@ -33,3 +33,12 @@ func TestParsing(t *testing.T) {
 	assert.Equal(20, len(jb))
 	assert.Equal(junctionBox{57, 618, 57, 1}, jb[1])
 }
+
+func Test1(t *testing.T) {
+	jb := parseInput(example)
+	assert := assert.New(t)
+
+	i, j := findClosestPair(jb)
+	assert.Equal(0, i)
+	assert.Equal(19, j)
+}
