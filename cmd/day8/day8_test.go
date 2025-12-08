@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -36,27 +36,31 @@ func TestParsing(t *testing.T) {
 }
 
 func Test1(t *testing.T) {
-	jb := parseInput(example)
 	assert := assert.New(t)
+	jb := parseInput(example)
+	log.Println(jb)
+	log.Println(determineCircuitSizes(jb))
 
 	i, j := findClosestPair(jb)
 	assert.Equal(0, i)
 	assert.Equal(19, j)
-	jb = connect(i, j, jb)
-	fmt.Println(jb)
+	connect(i, j, jb)
+	log.Println(jb)
+	log.Println(determineCircuitSizes(jb))
 
 	i, j = findClosestPair(jb)
 	assert.Equal(0, i)
 	assert.Equal(7, j)
-	jb = connect(i, j, jb)
-	fmt.Println(jb)
+	connect(i, j, jb)
+	log.Println(jb)
+	log.Println(determineCircuitSizes(jb))
 
 	circuitSizes := determineCircuitSizes(jb)
 	assert.Equal([]int{3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, circuitSizes)
 
 	for n := 2; n < 10; n++ {
 		i, j = findClosestPair(jb)
-		jb = connect(i, j, jb)
+		connect(i, j, jb)
 	}
 
 	circuitSizes = determineCircuitSizes(jb)

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"slices"
 	"strconv"
 	"strings"
@@ -49,7 +50,7 @@ func findClosestPair(jb []junctionBox) (index1, index2 int) {
 	min2 := -2
 	for i := 0; i < len(jb); i++ {
 		for j := i + 1; j < len(jb); j++ {
-			if jb[i] != jb[j] {
+			if jb[i].c != jb[j].c {
 				dist := calcDistance(
 					jb[i].x, jb[i].y, jb[i].z,
 					jb[j].x, jb[j].y, jb[j].z)
@@ -64,14 +65,15 @@ func findClosestPair(jb []junctionBox) (index1, index2 int) {
 	return min1, min2
 }
 
-func connect(i, j int, jb []junctionBox) []junctionBox {
+func connect(i, j int, jb []junctionBox) {
+	log.Printf("connect %v and %v", i, j)
 	newc := min(jb[i].c, jb[j].c)
 	for k := range jb {
 		if jb[k].c == jb[i].c || jb[k].c == jb[j].c {
+			log.Printf("change index %v from circuit %v to circuit %v", k, jb[k].c, newc)
 			jb[k].c = newc
 		}
 	}
-	return jb
 }
 
 // return value is sorted descending
