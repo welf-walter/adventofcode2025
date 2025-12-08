@@ -41,4 +41,11 @@ func Test1(t *testing.T) {
 	i, j := findClosestPair(jb)
 	assert.Equal(0, i)
 	assert.Equal(19, j)
+	connect(i, j, jb)
+
+	i, j = findClosestPair(jb)
+	assert.Equal(0, i)
+	assert.Equal(7, j)
+	connect(i, j, jb)
+
 }

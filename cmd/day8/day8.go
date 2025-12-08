@@ -62,3 +62,12 @@ func findClosestPair(jb []junctionBox) (index1, index2 int) {
 	}
 	return min1, min2
 }
+
+func connect(i, j int, jb []junctionBox) {
+	newc := min(jb[i].c, jb[j].c)
+	for k := range jb {
+		if jb[k].c == jb[i].c || jb[k].c == jb[j].c {
+			jb[k].c = newc
+		}
+	}
+}
