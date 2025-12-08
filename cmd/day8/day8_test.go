@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -41,11 +42,24 @@ func Test1(t *testing.T) {
 	i, j := findClosestPair(jb)
 	assert.Equal(0, i)
 	assert.Equal(19, j)
-	connect(i, j, jb)
+	jb = connect(i, j, jb)
+	fmt.Println(jb)
 
 	i, j = findClosestPair(jb)
 	assert.Equal(0, i)
 	assert.Equal(7, j)
-	connect(i, j, jb)
+	jb = connect(i, j, jb)
+	fmt.Println(jb)
+
+	circuitSizes := determineCircuitSizes(jb)
+	assert.Equal([]int{3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, circuitSizes)
+
+	for n := 2; n < 10; n++ {
+		i, j = findClosestPair(jb)
+		jb = connect(i, j, jb)
+	}
+
+	circuitSizes = determineCircuitSizes(jb)
+	assert.Equal([]int{5, 4, 2, 2, 1, 1, 1, 1, 1, 1, 1}, circuitSizes)
 
 }
