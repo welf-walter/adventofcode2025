@@ -1,6 +1,8 @@
 package main
 
 import (
+	"adventofcode/year2025/cmd/util"
+	"fmt"
 	"log"
 	"slices"
 	"strconv"
@@ -89,4 +91,20 @@ func determineCircuitSizes(jb []junctionBox) []int {
 	slices.Sort(list)
 	slices.Reverse(list)
 	return list
+}
+
+func main() {
+	input := util.LoadInput(8)
+	jb := parseInput(input)
+
+	// try to do -1 as in the test case
+	for range 1000 - 1 {
+		i, j := findClosestPair(jb)
+		connect(i, j, jb)
+	}
+
+	circuitSizes := determineCircuitSizes(jb)
+	log.Println(circuitSizes)
+	fmt.Println(circuitSizes[0] * circuitSizes[1] * circuitSizes[2])
+
 }

@@ -62,7 +62,8 @@ func Test1(t *testing.T) {
 
 	// "After making the ten shortest connections"
 	// but we just make nine shortest connection and get the expected result!?!?
-	for n := 3; n < /*10*/ 9; n++ {
+	//	for n := 3; n < /*10*/ 9; n++ {
+	for range 10 - 3 - 1 {
 		i, j = findClosestPair(jb)
 		connect(i, j, jb)
 		log.Println(determineCircuitSizes(jb))
