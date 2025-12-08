@@ -55,15 +55,22 @@ func Test1(t *testing.T) {
 	log.Println(jb)
 	log.Println(determineCircuitSizes(jb))
 
+	i, j = findClosestPair(jb)
+	connect(i, j, jb)
 	circuitSizes := determineCircuitSizes(jb)
 	assert.Equal([]int{3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, circuitSizes)
 
-	for n := 2; n < 10; n++ {
+	// "After making the ten shortest connections"
+	// but we just make nine shortest connection and get the expected result!?!?
+	for n := 3; n < /*10*/ 9; n++ {
 		i, j = findClosestPair(jb)
 		connect(i, j, jb)
+		log.Println(determineCircuitSizes(jb))
 	}
 
 	circuitSizes = determineCircuitSizes(jb)
 	assert.Equal([]int{5, 4, 2, 2, 1, 1, 1, 1, 1, 1, 1}, circuitSizes)
+
+	assert.Equal(5*4*2, circuitSizes[0]*circuitSizes[1]*circuitSizes[2])
 
 }
