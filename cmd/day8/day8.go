@@ -71,6 +71,21 @@ func findClosestPair(jb []junctionBox) (index1, index2 int) {
 	return min1, min2
 }
 
+type pairDistance struct{ i, j, dist int }
+
+// get list of all pairs, sorted by distance ascending
+func allPairsDistances(jb []junctionBox) []pairDistance {
+	pd := []pairDistance{}
+	util.ForAllPairIndices(jb, func(i, j int) {
+		dist := calcDistance(
+			jb[i].x, jb[i].y, jb[i].z,
+			jb[j].x, jb[j].y, jb[j].z)
+		pd = append(pd, pairDistance{i, j, dist})
+	})
+	slices.SortFunc(pd, func(a, b pairDistance) int { return a.dist - b.dist })
+	return pd
+}
+
 func connect(i, j int, jb []junctionBox) {
 	log.Printf("connect %v and %v", i, j)
 	newc := min(jb[i].c, jb[j].c)

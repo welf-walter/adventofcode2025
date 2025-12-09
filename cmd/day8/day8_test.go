@@ -60,6 +60,10 @@ func Test1(t *testing.T) {
 	circuitSizes := determineCircuitSizes(jb)
 	assert.Equal([]int{3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, circuitSizes)
 
+	pd := allPairsDistances(jb)
+	assert.Equal(20*19/2, len(pd))
+	assert.Equal(pairDistance{0, 19, 100427}, pd[0])
+	assert.Equal(pairDistance{0, 7, 103401}, pd[1])
 	// "After making the ten shortest connections"
 	// but we just make nine shortest connection and get the expected result!?!?
 	//	for n := 3; n < /*10*/ 9; n++ {
