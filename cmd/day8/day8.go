@@ -4,7 +4,6 @@ import (
 	"adventofcode/year2025/cmd/util"
 	"fmt"
 	"log"
-	"math"
 	"slices"
 	"strconv"
 	"strings"
@@ -44,31 +43,6 @@ func parseInput(input string) []junctionBox {
 // square distance, to be precise
 func calcDistance(x1, y1, z1, x2, y2, z2 int) int {
 	return (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) + (z2-z1)*(z2-z1)
-}
-
-// find closest pair which is not yet connected (not in the same circuit)
-func findClosestPair(jb []junctionBox) (index1, index2 int) {
-	minDist := math.MaxInt
-	min1 := -1
-	min2 := -2
-	for i := 0; i < len(jb); i++ {
-		for j := i + 1; j < len(jb); j++ {
-			if jb[i].c != jb[j].c {
-				dist := calcDistance(
-					jb[i].x, jb[i].y, jb[i].z,
-					jb[j].x, jb[j].y, jb[j].z)
-				if dist < minDist {
-					minDist = dist
-					min1 = i
-					min2 = j
-				}
-			}
-		}
-	}
-	if min1 < 0 {
-		panic(jb)
-	}
-	return min1, min2
 }
 
 type pairDistance struct{ i, j, dist int }

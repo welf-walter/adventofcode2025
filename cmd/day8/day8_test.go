@@ -41,29 +41,23 @@ func Test1(t *testing.T) {
 	log.Println(jb)
 	log.Println(determineCircuitSizes(jb))
 
-	i, j := findClosestPair(jb)
-	assert.Equal(0, i)
-	assert.Equal(19, j)
-	connect(i, j, jb)
+	pd := allPairsDistances(jb)
+	assert.Equal(20*19/2, len(pd))
+
+	assert.Equal(pairDistance{0, 19, 100427}, pd[0])
+	connect(pd[0].i, pd[0].j, jb)
 	log.Println(jb)
 	log.Println(determineCircuitSizes(jb))
 
-	i, j = findClosestPair(jb)
-	assert.Equal(0, i)
-	assert.Equal(7, j)
-	connect(i, j, jb)
+	assert.Equal(pairDistance{0, 7, 103401}, pd[1])
+	connect(pd[1].i, pd[1].j, jb)
 	log.Println(jb)
 	log.Println(determineCircuitSizes(jb))
 
-	i, j = findClosestPair(jb)
-	connect(i, j, jb)
+	connect(pd[2].i, pd[2].j, jb)
 	circuitSizes := determineCircuitSizes(jb)
 	assert.Equal([]int{3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, circuitSizes)
 
-	pd := allPairsDistances(jb)
-	assert.Equal(20*19/2, len(pd))
-	assert.Equal(pairDistance{0, 19, 100427}, pd[0])
-	assert.Equal(pairDistance{0, 7, 103401}, pd[1])
 	for n := range 10 {
 		i := pd[n].i
 		j := pd[n].j
