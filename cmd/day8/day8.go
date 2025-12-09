@@ -117,12 +117,14 @@ func main() {
 	input := util.LoadInput(8)
 	jb := parseInput(input)
 
-	// try to do -1 as in the test case
-	//	for range 1000 - 1 {
-	for n := range 999 {
+	pd := allPairsDistances(jb)
+	for n := range 1000 {
 		log.Printf("Iteration #%v", n)
-		i, j := findClosestPair(jb)
-		connect(i, j, jb)
+		i := pd[n].i
+		j := pd[n].j
+		if jb[i].c != jb[j].c {
+			connect(i, j, jb)
+		}
 		log.Println(determineCircuitSizes(jb))
 	}
 

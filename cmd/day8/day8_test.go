@@ -64,12 +64,12 @@ func Test1(t *testing.T) {
 	assert.Equal(20*19/2, len(pd))
 	assert.Equal(pairDistance{0, 19, 100427}, pd[0])
 	assert.Equal(pairDistance{0, 7, 103401}, pd[1])
-	// "After making the ten shortest connections"
-	// but we just make nine shortest connection and get the expected result!?!?
-	//	for n := 3; n < /*10*/ 9; n++ {
-	for range 10 - 3 - 1 {
-		i, j = findClosestPair(jb)
-		connect(i, j, jb)
+	for n := range 10 {
+		i := pd[n].i
+		j := pd[n].j
+		if jb[i].c != jb[j].c {
+			connect(i, j, jb)
+		}
 		log.Println(determineCircuitSizes(jb))
 	}
 
