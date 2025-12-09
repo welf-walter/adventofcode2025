@@ -4,6 +4,7 @@ import (
 	"adventofcode/year2025/cmd/util"
 	"fmt"
 	"log"
+	"math"
 	"slices"
 	"strconv"
 	"strings"
@@ -47,7 +48,7 @@ func calcDistance(x1, y1, z1, x2, y2, z2 int) int {
 
 // find closest pair which is not yet connected (not in the same circuit)
 func findClosestPair(jb []junctionBox) (index1, index2 int) {
-	minDist := 99999999
+	minDist := math.MaxInt
 	min1 := -1
 	min2 := -2
 	for i := 0; i < len(jb); i++ {
@@ -64,16 +65,20 @@ func findClosestPair(jb []junctionBox) (index1, index2 int) {
 			}
 		}
 	}
+	if min1 < 0 {
+		panic(jb)
+	}
 	return min1, min2
 }
 
 func connect(i, j int, jb []junctionBox) {
 	log.Printf("connect %v and %v", i, j)
 	newc := min(jb[i].c, jb[j].c)
+	oldc := max(jb[i].c, jb[j].c)
 	for k := range jb {
-		if jb[k].c == jb[i].c || jb[k].c == jb[j].c {
-			log.Printf("change index %v from circuit %v to circuit %v", k, jb[k].c, newc)
+		if jb[k].c == oldc {
 			jb[k].c = newc
+			log.Printf("change index %v from circuit %v to circuit %v", k, oldc, newc)
 		}
 	}
 }
@@ -98,9 +103,12 @@ func main() {
 	jb := parseInput(input)
 
 	// try to do -1 as in the test case
-	for range 1000 - 1 {
+	//	for range 1000 - 1 {
+	for n := range 999 {
+		log.Printf("Iteration #%v", n)
 		i, j := findClosestPair(jb)
 		connect(i, j, jb)
+		log.Println(determineCircuitSizes(jb))
 	}
 
 	circuitSizes := determineCircuitSizes(jb)
