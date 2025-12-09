@@ -24,3 +24,13 @@ func parseInput(input string) []redTile {
 	}
 	return tiles
 }
+
+func calcArea(a, b redTile) int {
+	return (max(a.x, b.x) - min(a.x, b.x) + 1) *
+		(max(a.y, b.y) - min(a.y, b.y) + 1)
+}
+
+func largestRectangle(tiles []redTile) (area int) {
+	util.ForAllPairs(tiles, func(a, b redTile) { area = max(area, calcArea(a, b)) })
+	return
+}

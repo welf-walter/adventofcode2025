@@ -20,4 +20,5 @@ func TestParsing(t *testing.T) {
 	tiles := parseInput(example)
 	assert.Equal(8, len(tiles))
 	assert.Equal(redTile{11, 7}, tiles[2])
+	assert.Equal(50, largestRectangle(tiles))
 }
