@@ -9,7 +9,7 @@ test:
 	echo $(DAYS)
 endif
 
-all: $(TARGETS) out
+all: $(TARGETS) out out/util
 	echo All days implemented: $(DAYS)
 	echo All targets: $(TARGETS)
 
@@ -19,6 +19,11 @@ clean:
 
 out:
 	mkdir out
+
+out/util: cmd/util/*
+	go test adventofcode/year2025/cmd/util
+	touch out/util
+
 
 # use variable $(1) day number
 define MAKEDAY
