@@ -2,6 +2,7 @@ package main
 
 import (
 	"adventofcode/year2025/cmd/util"
+	"fmt"
 	"strings"
 )
 
@@ -33,4 +34,9 @@ func calcArea(a, b redTile) int {
 func largestRectangle(tiles []redTile) (area int) {
 	util.ForAllPairs(tiles, func(a, b redTile) { area = max(area, calcArea(a, b)) })
 	return
+}
+
+func main() {
+	tiles := parseInput(util.LoadInput(9))
+	fmt.Println(largestRectangle(tiles))
 }
