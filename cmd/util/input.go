@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func LoadInput(day int) string {
@@ -20,4 +21,14 @@ func String2Int(s string) int {
 		panic(err)
 	}
 	return i
+}
+
+func CommaList2IntSlice(input string) []int {
+	ints := []int{}
+	numberStrings := strings.Split(input, ",")
+	for _, numberString := range numberStrings {
+		i := String2Int(numberString)
+		ints = append(ints, i)
+	}
+	return ints
 }
