@@ -2,6 +2,7 @@ package main
 
 import (
 	"adventofcode/year2025/cmd/util"
+	"fmt"
 	"strings"
 )
 
@@ -106,4 +107,13 @@ func calcMinNumberOfButtons(m machine) int {
 		}
 	}
 	return minButtons
+}
+
+func main() {
+	machines := parseInput(util.LoadInput(10))
+	sum := 0
+	for _, m := range machines {
+		sum += calcMinNumberOfButtons(m)
+	}
+	fmt.Println(sum)
 }
