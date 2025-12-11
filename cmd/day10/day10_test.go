@@ -25,8 +25,18 @@ func Test1(t *testing.T) {
 	assert := assert.New(t)
 	machines := parseInput(example)
 
-	assert.Equal(machines[0].lights, toggleIndicatorLights(machines[0], 0b000111))
-	assert.Equal(machines[0].lights, toggleIndicatorLights(machines[0], 0b001010))
-	assert.Equal(machines[0].lights, toggleIndicatorLights(machines[0], 0b111101))
+	l0, b0 := toggleIndicatorLights(machines[0], 0b000111)
+	assert.Equal(machines[0].lights, l0)
+	assert.Equal(3, b0)
+	l1, b1 := toggleIndicatorLights(machines[0], 0b001010)
+	assert.Equal(machines[0].lights, l1)
+	assert.Equal(2, b1)
+	l2, b2 := toggleIndicatorLights(machines[0], 0b111101)
+	assert.Equal(machines[0].lights, l2)
+	assert.Equal(5, b2)
+
+	assert.Equal(2, calcMinNumberOfButtons(machines[0]))
+	assert.Equal(3, calcMinNumberOfButtons(machines[1]))
+	assert.Equal(2, calcMinNumberOfButtons(machines[2]))
 
 }

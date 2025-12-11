@@ -71,14 +71,39 @@ func parseInput(input string) (machines []machine) {
 	return
 }
 
-func toggleIndicatorLights(m machine, buttonBitMask int) indicatorLights {
-	lights := make(indicatorLights, len(m.lights))
+func toggleIndicatorLights(m machine, buttonBitMask int) (lights indicatorLights, buttonCount int) {
+	lights = make(indicatorLights, len(m.lights))
 	for index, button := range m.buttons {
 		if buttonBitMask&(1<<index) > 0 {
 			for _, light := range button {
 				lights[light] = !lights[light]
 			}
+			buttonCount++
 		}
 	}
-	return lights
+	return
+}
+
+func indicatorLightsEqual(i, j indicatorLights) bool {
+	if len(i) != len(j) {
+		panic(i)
+	}
+	for n := range len(i) {
+		if i[n] != j[n] {
+			return false
+		}
+	}
+	return true
+}
+
+func calcMinNumberOfButtons(m machine) int {
+	minButtons := 99999999
+	combinations := 1 << len(m.buttons)
+	for i := range combinations {
+		lights, buttonCount := toggleIndicatorLights(m, i)
+		if indicatorLightsEqual(lights, m.lights) {
+			minButtons = min(minButtons, buttonCount)
+		}
+	}
+	return minButtons
 }
