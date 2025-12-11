@@ -15,8 +15,18 @@ func TestParsing(t *testing.T) {
 	machines := parseInput(example)
 
 	assert.Equal(3, len(machines))
-	assert.Equal([]bool{false, true, true, false}, machines[0].indicatorLights)
+	assert.Equal(indicatorLights{false, true, true, false}, machines[0].lights)
 	assert.Equal(button{1, 3}, machines[0].buttons[1])
 	assert.Equal([]int{3, 5, 4, 7}, machines[0].joltage)
+
+}
+
+func Test1(t *testing.T) {
+	assert := assert.New(t)
+	machines := parseInput(example)
+
+	assert.Equal(machines[0].lights, toggleIndicatorLights(machines[0], 0b000111))
+	assert.Equal(machines[0].lights, toggleIndicatorLights(machines[0], 0b001010))
+	assert.Equal(machines[0].lights, toggleIndicatorLights(machines[0], 0b111101))
 
 }

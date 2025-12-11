@@ -8,10 +8,12 @@ import (
 // indices of indicatorLights that this button toggles
 type button []int
 
+type indicatorLights []bool
+
 type machine struct {
-	indicatorLights []bool
-	buttons         []button
-	joltage         []int
+	lights  indicatorLights
+	buttons []button
+	joltage []int
 }
 
 func parseIndicatorLights(input string) []bool {
@@ -54,7 +56,7 @@ func parseInput(input string) (machines []machine) {
 		for token := range token_iter {
 			switch token[0] {
 			case '[':
-				m.indicatorLights = parseIndicatorLights(token)
+				m.lights = parseIndicatorLights(token)
 			case '(':
 				m.buttons = append(m.buttons, parseButton(token))
 			case '{':
@@ -67,4 +69,16 @@ func parseInput(input string) (machines []machine) {
 		machines = append(machines, m)
 	}
 	return
+}
+
+func toggleIndicatorLights(m machine, buttonBitMask int) indicatorLights {
+	lights := make(indicatorLights, len(m.lights))
+	for index, button := range m.buttons {
+		if buttonBitMask&(1<<index) > 0 {
+			for _, light := range button {
+				lights[light] = !lights[light]
+			}
+		}
+	}
+	return lights
 }
