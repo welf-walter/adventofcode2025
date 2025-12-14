@@ -31,19 +31,24 @@ func ForAllPathes(from Node, yield func(path Path)) {
 func forAllPathes(path Path, yield func(path Path)) {
 
 	current := path[len(path)-1]
+	log.Printf("current path = %v", current)
+
 	for _, edge := range current.targets() {
 		next := edge.to()
 		if slices.Contains(path, next) {
-			// been there. done that
+			log.Printf("  %v: been there. done that", next)
 			continue
 		}
-		newPath := make([]Node, len(path)+1)
+
+		newPath := make([]Node, len(path), len(path)+1)
 		copy(newPath, path)
 		newPath = append(newPath, next)
 
 		if next.isFinish() {
+			log.Printf("  %v: finish", next)
 			yield(newPath)
 		} else {
+			log.Printf("  %v: recurse", next)
 			forAllPathes(newPath, yield)
 		}
 	}
@@ -140,6 +145,10 @@ func (node SimpleNode) sources() []Edge {
 
 func (node SimpleNode) isFinish() bool {
 	return node == node.graph.finishNode
+}
+
+func (node SimpleNode) String() string {
+	return node.name
 }
 
 func (graph *SimpleGraph) addNode(name string) Node {
