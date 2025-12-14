@@ -84,6 +84,7 @@ func (path SimplePath) cost() int {
 type SimpleNode struct {
 	graph *SimpleGraph
 	index int
+	name  string
 }
 
 func (node SimpleNode) targets() []Path {
@@ -108,4 +109,16 @@ func (node SimpleNode) sources() []Path {
 
 func (node SimpleNode) isFinish() bool {
 	return node == node.graph.finishNode
+}
+
+func (graph *SimpleGraph) addNode(name string) Node {
+	index := len(graph.nodes)
+	graph.nodes = append(graph.nodes, SimpleNode{graph, index, name})
+	return graph.nodes[index]
+}
+
+func (graph *SimpleGraph) addPath(fromIndex, toIndex int) Path {
+	index := len(graph.pathes)
+	graph.pathes = append(graph.pathes, SimplePath{graph, fromIndex, toIndex, 1})
+	return graph.pathes[index]
 }
