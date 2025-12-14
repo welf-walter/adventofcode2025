@@ -1,5 +1,10 @@
 package optimize
 
+import (
+	"log"
+	"math"
+)
+
 type Node interface {
 	// what nodes can I reach?
 	targets() []Path
@@ -32,8 +37,13 @@ func calcCostMap(nodes []Node) (costMap PathCostMap) {
 	for todoIndex := 0; todoIndex < len(todoList); todoIndex++ {
 		target := todoList[todoIndex]
 		targetCost := costMap[target]
+		log.Printf("#%v: Inspect node %v with cost %v", todoIndex, target, targetCost)
 		for _, path := range target.sources() {
-			currentCost := costMap[path.from()]
+			currentCost, found := costMap[path.from()]
+			if !found {
+				currentCost = math.MaxInt
+			}
+			log.Printf("    is %v + %v < %v ?", targetCost, path.cost(), currentCost)
 			if targetCost+path.cost() < currentCost {
 				costMap[path.from()] = targetCost + path.cost()
 				todoList = append(todoList, path.from())

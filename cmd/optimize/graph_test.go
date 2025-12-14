@@ -1,6 +1,7 @@
 package optimize
 
 import (
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -33,4 +34,8 @@ func TestCostMap(t *testing.T) {
 	assert.Equal(1, len(nodes[1].sources()))
 	assert.Equal(1, len(nodes[1].targets()))
 	assert.Equal(true, nodes[3].isFinish())
+
+	costMap := calcCostMap(nodes)
+	log.Println(costMap)
+	assert.Equal(costMap[nodes[0]], 2)
 }
