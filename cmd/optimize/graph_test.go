@@ -19,10 +19,10 @@ func example1() (nodes []Node) {
 		nodes = append(nodes, node)
 	}
 
-	graph.addPath(0, 1)
-	graph.addPath(0, 2)
-	graph.addPath(1, 3)
-	graph.addPath(2, 3)
+	graph.addEdge(0, 1)
+	graph.addEdge(0, 2)
+	graph.addEdge(1, 3)
+	graph.addEdge(2, 3)
 
 	graph.finishNode = graph.nodes[3]
 
@@ -40,4 +40,17 @@ func TestCostMap(t *testing.T) {
 	costMap := calcCostMap(nodes)
 	log.Println(costMap)
 	assert.Equal(costMap[nodes[0]], 2)
+}
+
+func TestForAllPathes(t *testing.T) {
+	assert := assert.New(t)
+	pathes := []Path{}
+
+	nodes := example1()
+	ForAllPathes(nodes[0], func(path Path) {
+		pathes = append(pathes, path)
+	})
+	assert.Equal(Path{nodes[0], nodes[1], nodes[3]}, pathes[0])
+	assert.Equal(Path{nodes[0], nodes[2], nodes[3]}, pathes[1])
+
 }

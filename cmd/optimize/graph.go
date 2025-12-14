@@ -3,27 +3,58 @@ package optimize
 import (
 	"log"
 	"math"
+	"slices"
 )
 
 type Node interface {
 	// what nodes can I reach?
-	targets() []Path
+	targets() []Edge
 	// how can I come to this?
-	sources() []Path
+	sources() []Edge
 	// is this a finishing node?
 	isFinish() bool
 }
 
-type Path interface {
+type Edge interface {
 	from() Node
 	to() Node
 	cost() int
 }
 
-type PathCostMap map[Node]int
+type Path []Node
 
-func calcCostMap(nodes []Node) (costMap PathCostMap) {
-	costMap = PathCostMap{}
+func ForAllPathes(from Node, yield func(path Path)) {
+	path := Path{from}
+	forAllPathes(path, yield)
+}
+
+func forAllPathes(path Path, yield func(path Path)) {
+
+	current := path[len(path)-1]
+	for _, edge := range current.targets() {
+		next := edge.to()
+		if slices.Contains(path, next) {
+			// been there. done that
+			continue
+		}
+		newPath := make([]Node, len(path)+1)
+		copy(newPath, path)
+		newPath = append(newPath, next)
+
+		if next.isFinish() {
+			yield(newPath)
+		} else {
+			forAllPathes(newPath, yield)
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////
+
+type EdgeCostMap map[Node]int
+
+func calcCostMap(nodes []Node) (costMap EdgeCostMap) {
+	costMap = EdgeCostMap{}
 	todoList := []Node{}
 
 	// init all finish nodes with zero
@@ -38,15 +69,15 @@ func calcCostMap(nodes []Node) (costMap PathCostMap) {
 		target := todoList[todoIndex]
 		targetCost := costMap[target]
 		log.Printf("#%v: Inspect node %v with cost %v", todoIndex, target, targetCost)
-		for _, path := range target.sources() {
-			currentCost, found := costMap[path.from()]
+		for _, edge := range target.sources() {
+			currentCost, found := costMap[edge.from()]
 			if !found {
 				currentCost = math.MaxInt
 			}
-			log.Printf("    is %v + %v < %v ?", targetCost, path.cost(), currentCost)
-			if targetCost+path.cost() < currentCost {
-				costMap[path.from()] = targetCost + path.cost()
-				todoList = append(todoList, path.from())
+			log.Printf("    is %v + %v < %v ?", targetCost, edge.cost(), currentCost)
+			if targetCost+edge.cost() < currentCost {
+				costMap[edge.from()] = targetCost + edge.cost()
+				todoList = append(todoList, edge.from())
 			}
 		}
 	}
@@ -58,27 +89,27 @@ func calcCostMap(nodes []Node) (costMap PathCostMap) {
 
 type SimpleGraph struct {
 	nodes      []SimpleNode
-	pathes     []SimplePath
+	edges      []SimpleEdge
 	finishNode SimpleNode
 }
 
-type SimplePath struct {
+type SimpleEdge struct {
 	graph     *SimpleGraph
 	fromIndex int
 	toIndex   int
 	costValue int
 }
 
-func (path SimplePath) from() Node {
-	return path.graph.nodes[path.fromIndex]
+func (edge SimpleEdge) from() Node {
+	return edge.graph.nodes[edge.fromIndex]
 }
 
-func (path SimplePath) to() Node {
-	return path.graph.nodes[path.toIndex]
+func (edge SimpleEdge) to() Node {
+	return edge.graph.nodes[edge.toIndex]
 }
 
-func (path SimplePath) cost() int {
-	return path.costValue
+func (edge SimpleEdge) cost() int {
+	return edge.costValue
 }
 
 type SimpleNode struct {
@@ -87,21 +118,21 @@ type SimpleNode struct {
 	name  string
 }
 
-func (node SimpleNode) targets() []Path {
-	t := []Path{}
-	for _, path := range node.graph.pathes {
-		if path.fromIndex == node.index {
-			t = append(t, path)
+func (node SimpleNode) targets() []Edge {
+	t := []Edge{}
+	for _, edge := range node.graph.edges {
+		if edge.fromIndex == node.index {
+			t = append(t, edge)
 		}
 	}
 	return t
 }
 
-func (node SimpleNode) sources() []Path {
-	t := []Path{}
-	for _, path := range node.graph.pathes {
-		if path.toIndex == node.index {
-			t = append(t, path)
+func (node SimpleNode) sources() []Edge {
+	t := []Edge{}
+	for _, edge := range node.graph.edges {
+		if edge.toIndex == node.index {
+			t = append(t, edge)
 		}
 	}
 	return t
@@ -117,8 +148,8 @@ func (graph *SimpleGraph) addNode(name string) Node {
 	return graph.nodes[index]
 }
 
-func (graph *SimpleGraph) addPath(fromIndex, toIndex int) Path {
-	index := len(graph.pathes)
-	graph.pathes = append(graph.pathes, SimplePath{graph, fromIndex, toIndex, 1})
-	return graph.pathes[index]
+func (graph *SimpleGraph) addEdge(fromIndex, toIndex int) Edge {
+	index := len(graph.edges)
+	graph.edges = append(graph.edges, SimpleEdge{graph, fromIndex, toIndex, 1})
+	return graph.edges[index]
 }
