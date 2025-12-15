@@ -59,7 +59,7 @@ func (node SimpleNode) String() string {
 	return node.name
 }
 
-func (graph *SimpleGraph) addNode(name string) Node {
+func (graph *SimpleGraph) AddNode(name string) Node {
 	index := len(graph.nodes)
 	graph.nodes = append(graph.nodes, SimpleNode{graph, index, name})
 	return graph.nodes[index]
@@ -69,4 +69,31 @@ func (graph *SimpleGraph) addEdge(fromIndex, toIndex int) Edge {
 	index := len(graph.edges)
 	graph.edges = append(graph.edges, SimpleEdge{graph, fromIndex, toIndex, 1})
 	return graph.edges[index]
+}
+
+func (graph *SimpleGraph) AddEdge(from, to SimpleNode) Edge {
+	return graph.addEdge(from.index, to.index)
+}
+
+func (graph *SimpleGraph) FindNode(name string) SimpleNode {
+	for _, n := range graph.nodes {
+		if n.name == name {
+			return n
+		}
+	}
+	panic(name)
+}
+
+func (graph *SimpleGraph) SetFinish(name string) {
+	graph.finishNode = graph.FindNode(name)
+}
+
+// mainly for tests
+func (graph *SimpleGraph) GetTargets(name string) []string {
+	targetNames := []string{}
+	node := graph.FindNode(name)
+	for _, target := range node.targets() {
+		targetNames = append(targetNames, target.to().(SimpleNode).name)
+	}
+	return targetNames
 }

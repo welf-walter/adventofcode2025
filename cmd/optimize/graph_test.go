@@ -15,7 +15,7 @@ func example1() (nodes []Node) {
 	//  2   ->   3
 	for i := range 4 {
 		name := fmt.Sprintf("Node%v", i)
-		node := graph.addNode(name)
+		node := graph.AddNode(name)
 		nodes = append(nodes, node)
 	}
 
