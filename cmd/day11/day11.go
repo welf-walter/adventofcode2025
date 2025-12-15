@@ -2,6 +2,8 @@ package main
 
 import (
 	"adventofcode/year2025/cmd/optimize"
+	"adventofcode/year2025/cmd/util"
+	"fmt"
 	"strings"
 )
 
@@ -32,4 +34,14 @@ func parseInput(input string) optimize.SimpleGraph {
 	graph.SetFinish(finishNodeName)
 	return graph
 
+}
+
+func main() {
+	graph := parseInput(util.LoadInput(11))
+
+	pathCounter := 0
+	optimize.ForAllPathes(graph.FindNode(startNodeName), func(path optimize.Path) {
+		pathCounter++
+	})
+	fmt.Println(pathCounter)
 }
