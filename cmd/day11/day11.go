@@ -54,9 +54,18 @@ func maybeProblematic(path optimize.Path) bool {
 func main() {
 	graph := parseInput(util.LoadInput(11))
 
-	pathCounter := 0
+	pathCounter1 := 0
 	optimize.ForAllPathes(graph.FindNode(startNodeName1), func(path optimize.Path) {
-		pathCounter++
+		pathCounter1++
 	})
-	fmt.Println(pathCounter)
+	fmt.Println(pathCounter1)
+
+	pathCounter2 := 0
+	optimize.ForAllPathes(graph.FindNode(startNodeName2), func(path optimize.Path) {
+		if maybeProblematic(path) {
+			pathCounter2++
+		}
+	})
+	fmt.Println(pathCounter2)
+
 }
