@@ -7,7 +7,8 @@ import (
 	"strings"
 )
 
-const startNodeName = "you"
+const startNodeName1 = "you"
+const startNodeName2 = "svr"
 const finishNodeName = "out"
 
 func parseInput(input string) optimize.SimpleGraph {
@@ -36,11 +37,25 @@ func parseInput(input string) optimize.SimpleGraph {
 
 }
 
+func maybeProblematic(path optimize.Path) bool {
+	dac := false
+	fft := false
+	for _, node := range path {
+		if node.(optimize.SimpleNode).String() == "dac" {
+			dac = true
+		}
+		if node.(optimize.SimpleNode).String() == "fft" {
+			fft = true
+		}
+	}
+	return dac && fft
+}
+
 func main() {
 	graph := parseInput(util.LoadInput(11))
 
 	pathCounter := 0
-	optimize.ForAllPathes(graph.FindNode(startNodeName), func(path optimize.Path) {
+	optimize.ForAllPathes(graph.FindNode(startNodeName1), func(path optimize.Path) {
 		pathCounter++
 	})
 	fmt.Println(pathCounter)
