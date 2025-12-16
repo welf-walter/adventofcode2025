@@ -32,3 +32,13 @@ func CommaList2IntSlice(input string) []int {
 	}
 	return ints
 }
+
+func SpaceList2IntSlice(input string) []int {
+	ints := []int{}
+	numberStrings := strings.Split(input, " ")
+	for _, numberString := range numberStrings {
+		i := String2Int(numberString)
+		ints = append(ints, i)
+	}
+	return ints
+}
