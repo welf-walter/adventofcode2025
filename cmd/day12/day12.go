@@ -37,6 +37,36 @@ func (r regionMap) clone() regionMap {
 	return m
 }
 
+func (sh shape) String() (str string) {
+	str += "\n"
+	for y := range sh {
+		for x := range sh[y] {
+			if sh[y][x] {
+				str += "#"
+			} else {
+				str += "."
+			}
+		}
+		str += "\n"
+	}
+	return
+}
+
+func (r regionMap) String() (s string) {
+	s += "\n"
+	for y := range r {
+		for x := range r[y] {
+			if r[y][x] {
+				s += "#"
+			} else {
+				s += "."
+			}
+		}
+		s += "\n"
+	}
+	return
+}
+
 // rotate right
 func rotateShape(in shape) (out shape) {
 	for y := range 3 {
@@ -95,12 +125,13 @@ func (m regionMap) canIplaceAll(shapes []shape) bool {
 	// try to put head somewhere
 	for y := range len(m) - len(head) + 1 {
 		for x := range len(m[y]) - len(head[y]) + 1 {
-			for variantIndex := range variants {
+			for variantIndex, variant := range variants {
 				log.Printf("  try to place variant %v at %v, %v.", variantIndex, x, y)
-				if m.canPlace(head, x, y) {
+				if m.canPlace(variant, x, y) {
 					log.Printf("  place variant %v at %v, %v. %v shapes left", variantIndex, x, y, len(tail))
 					m2 := m.clone()
-					m2.doPlace(head, x, y)
+					m2.doPlace(variant, x, y)
+					log.Println(m2)
 					if m2.canIplaceAll(tail) {
 						return true
 					}
