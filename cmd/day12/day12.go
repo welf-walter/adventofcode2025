@@ -20,6 +20,14 @@ type puzzle struct {
 
 type regionMap [][]bool
 
+func (r region) makeMap() regionMap {
+	m := make(regionMap, r.height)
+	for y := range r.height {
+		m[y] = make([]bool, r.width)
+	}
+	return m
+}
+
 // rotate right
 func rotateShape(in shape) (out shape) {
 	for y := range 3 {
@@ -37,6 +45,26 @@ func flipShape(in shape) (out shape) {
 		}
 	}
 	return
+}
+
+func (m *regionMap) canPlace(s shape, x, y int) bool {
+	for dy := range 3 {
+		for dx := range 3 {
+			if (*m)[y+dy][x+dx] && s[dy][dx] {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func (m *regionMap) doPlace(s shape, x, y int) bool {
+	for dy := range 3 {
+		for dx := range 3 {
+			(*m)[y+dy][x+dx] = (*m)[y+dy][x+dx] || s[dy][dx]
+		}
+	}
+	return true
 }
 
 func parseShape(input string) shape {

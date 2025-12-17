@@ -51,7 +51,7 @@ func TestParsing(t *testing.T) {
 
 }
 
-func TestRotate(t *testing.T) {
+func TestShapes(t *testing.T) {
 	assert := assert.New(t)
 	s1 := parseShape(`3:
 ##.
@@ -79,4 +79,15 @@ func TestRotate(t *testing.T) {
 	assert.Equal(s1, rotateShape(s4))
 
 	assert.Equal(s4, flipShape(s2))
+
+	r := region{5, 5, []int{}}
+	m := r.makeMap()
+
+	assert.True(m.canPlace(s1, 0, 0))
+	m.doPlace(s1, 0, 0)
+	assert.False(m.canPlace(s1, 0, 0))
+	assert.False(m.canPlace(s1, 1, 1))
+	assert.True(m.canPlace(s1, 2, 2))
+	m.doPlace(s1, 2, 2)
+	assert.False(m.canPlace(s1, 2, 2))
 }
