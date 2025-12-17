@@ -78,4 +78,5 @@ func TestRotate(t *testing.T) {
 	assert.Equal(s4, rotateShape(s3))
 	assert.Equal(s1, rotateShape(s4))
 
+	assert.Equal(s4, flipShape(s2))
 }

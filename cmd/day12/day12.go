@@ -18,11 +18,22 @@ type puzzle struct {
 	regions []region
 }
 
+type regionMap [][]bool
+
 // rotate right
 func rotateShape(in shape) (out shape) {
 	for y := range 3 {
 		for x := range 3 {
 			out[x][2-y] = in[y][x]
+		}
+	}
+	return
+}
+
+func flipShape(in shape) (out shape) {
+	for y := range 3 {
+		for x := range 3 {
+			out[2-y][x] = in[y][x]
 		}
 	}
 	return
