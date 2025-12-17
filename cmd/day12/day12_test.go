@@ -91,3 +91,12 @@ func TestShapes(t *testing.T) {
 	m.doPlace(s1, 2, 2)
 	assert.False(m.canPlace(s1, 2, 2))
 }
+
+func Test1(t *testing.T) {
+	assert := assert.New(t)
+	p := parseInput(example)
+
+	r1 := region{4, 4, []int{}}
+	m := r1.makeMap()
+	assert.True(m.canIplaceAll([]shape{p.shapes[4], p.shapes[4]}))
+}

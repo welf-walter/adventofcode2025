@@ -2,6 +2,7 @@ package day12
 
 import (
 	"adventofcode/year2025/cmd/util"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -24,6 +25,14 @@ func (r region) makeMap() regionMap {
 	m := make(regionMap, r.height)
 	for y := range r.height {
 		m[y] = make([]bool, r.width)
+	}
+	return m
+}
+
+func (r regionMap) clone() regionMap {
+	m := make(regionMap, len(r))
+	for y := range len(r) {
+		m[y] = make([]bool, len(r[y]))
 	}
 	return m
 }
@@ -65,6 +74,41 @@ func (m *regionMap) doPlace(s shape, x, y int) bool {
 		}
 	}
 	return true
+}
+
+func (m regionMap) canIplaceAll(shapes []shape) bool {
+	if len(shapes) == 0 {
+		return true
+	}
+	head := shapes[0]
+	tail := shapes[1:]
+
+	// todo: skip equal shapes
+	variants := []shape{head, flipShape(head)}
+	for range 3 {
+		head = rotateShape(head)
+		variants = append(variants, head)
+		variants = append(variants, flipShape(head))
+	}
+	log.Println(variants)
+
+	// try to put head somewhere
+	for y := range len(m) - len(head) + 1 {
+		for x := range len(m[y]) - len(head[y]) + 1 {
+			for variantIndex := range variants {
+				log.Printf("  try to place variant %v at %v, %v.", variantIndex, x, y)
+				if m.canPlace(head, x, y) {
+					log.Printf("  place variant %v at %v, %v. %v shapes left", variantIndex, x, y, len(tail))
+					m2 := m.clone()
+					m2.doPlace(head, x, y)
+					if m2.canIplaceAll(tail) {
+						return true
+					}
+				}
+			}
+		}
+	}
+	return false
 }
 
 func parseShape(input string) shape {
