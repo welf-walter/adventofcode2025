@@ -18,6 +18,16 @@ type puzzle struct {
 	regions []region
 }
 
+// rotate right
+func rotateShape(in shape) (out shape) {
+	for y := range 3 {
+		for x := range 3 {
+			out[x][2-y] = in[y][x]
+		}
+	}
+	return
+}
+
 func parseShape(input string) shape {
 	var s shape
 	lines := strings.Split(input, "\n")

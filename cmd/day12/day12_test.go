@@ -50,3 +50,32 @@ func TestParsing(t *testing.T) {
 	assert.Equal([3]bool{true, true, false}, p.shapes[2][2])
 
 }
+
+func TestRotate(t *testing.T) {
+	assert := assert.New(t)
+	s1 := parseShape(`3:
+##.
+###
+##.`)
+
+	s2 := parseShape(`3:
+###
+###
+.#.`)
+
+	s3 := parseShape(`3:
+.##
+###
+.##`)
+
+	s4 := parseShape(`3:
+.#.
+###
+###`)
+
+	assert.Equal(s2, rotateShape(s1))
+	assert.Equal(s3, rotateShape(s2))
+	assert.Equal(s4, rotateShape(s3))
+	assert.Equal(s1, rotateShape(s4))
+
+}
