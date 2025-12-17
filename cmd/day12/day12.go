@@ -33,6 +33,9 @@ func (r regionMap) clone() regionMap {
 	m := make(regionMap, len(r))
 	for y := range len(r) {
 		m[y] = make([]bool, len(r[y]))
+		for x := range len(r[y]) {
+			m[y][x] = r[y][x]
+		}
 	}
 	return m
 }
@@ -120,13 +123,13 @@ func (m regionMap) canIplaceAll(shapes []shape) bool {
 		variants = append(variants, head)
 		variants = append(variants, flipShape(head))
 	}
-	log.Println(variants)
+	//log.Println(variants)
 
 	// try to put head somewhere
 	for y := range len(m) - len(head) + 1 {
 		for x := range len(m[y]) - len(head[y]) + 1 {
 			for variantIndex, variant := range variants {
-				log.Printf("  try to place variant %v at %v, %v.", variantIndex, x, y)
+				//log.Printf("  try to place variant %v at %v, %v.", variantIndex, x, y)
 				if m.canPlace(variant, x, y) {
 					log.Printf("  place variant %v at %v, %v. %v shapes left", variantIndex, x, y, len(tail))
 					m2 := m.clone()

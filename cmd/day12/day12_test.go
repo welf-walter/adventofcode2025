@@ -96,7 +96,13 @@ func Test1(t *testing.T) {
 	assert := assert.New(t)
 	p := parseInput(example)
 
-	r1 := region{4, 4, []int{}}
-	m := r1.makeMap()
+	m := p.regions[0].makeMap()
 	assert.True(m.canIplaceAll([]shape{p.shapes[4], p.shapes[4]}))
+
+	m2 := p.regions[1].makeMap()
+	assert.True(m2.canIplaceAll([]shape{p.shapes[0], p.shapes[2], p.shapes[4], p.shapes[4], p.shapes[5], p.shapes[5]}))
+
+	//m3 := p.regions[2].makeMap()
+	//assert.False(m3.canIplaceAll([]shape{p.shapes[0], p.shapes[2], p.shapes[4], p.shapes[4], p.shapes[4], p.shapes[5], p.shapes[5]}))
+
 }
