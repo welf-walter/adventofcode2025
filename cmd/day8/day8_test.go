@@ -73,3 +73,25 @@ func Test1(t *testing.T) {
 	assert.Equal(5*4*2, circuitSizes[0]*circuitSizes[1]*circuitSizes[2])
 
 }
+
+func Test2(t *testing.T) {
+	assert := assert.New(t)
+	jb := parseInput(example)
+
+	pd := allPairsDistances(jb)
+
+	for n := 0; ; n++ {
+		i := pd[n].i
+		j := pd[n].j
+		if jb[i].c != jb[j].c {
+			connect(i, j, jb)
+		}
+		circuitSize := determineCircuitSizes(jb)
+		if len(circuitSize) == 1 {
+			assert.Equal(junctionBox{216, 146, 977, 0}, jb[i])
+			assert.Equal(junctionBox{117, 168, 530, 0}, jb[j])
+			assert.Equal(25272, jb[i].x*jb[j].x)
+			return
+		}
+	}
+}
