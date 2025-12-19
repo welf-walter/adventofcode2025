@@ -36,4 +36,7 @@ func Test2(t *testing.T) {
 	assert.False(floor.coversRectangle(redTile{7, 3}, redTile{11, 0}))
 	assert.True(floor.coversRectangle(redTile{9, 7}, redTile{9, 5}))
 	assert.True(floor.coversRectangle(redTile{9, 5}, redTile{2, 3}))
+
+	assert.Equal(24, largestRectangleInFloor(floor, tiles))
+
 }

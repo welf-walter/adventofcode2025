@@ -37,6 +37,15 @@ func largestRectangle(tiles []redTile) (area int) {
 	return
 }
 
+func largestRectangleInFloor(floor tileFloor, tiles []redTile) (area int) {
+	util.ForAllPairs(tiles, func(a, b redTile) {
+		if floor.coversRectangle(a, b) {
+			area = max(area, calcArea(a, b))
+		}
+	})
+	return
+}
+
 // per line, from where to where are red or green tiles?
 type tileFloor struct {
 	lines []struct{ from, to int }
