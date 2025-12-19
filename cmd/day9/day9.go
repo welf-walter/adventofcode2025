@@ -121,4 +121,8 @@ func connectTiles(floor *tileFloor, tiles []redTile) {
 func main() {
 	tiles := parseInput(util.LoadInput(9))
 	fmt.Println(largestRectangle(tiles))
+
+	floor := newTileFloor(99999)
+	connectTiles(&floor, tiles)
+	fmt.Println(largestRectangleInFloor(floor, tiles))
 }

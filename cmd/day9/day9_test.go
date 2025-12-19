@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -29,7 +28,7 @@ func Test2(t *testing.T) {
 	tiles := parseInput(example)
 	floor := newTileFloor(12)
 	connectTiles(&floor, tiles)
-	log.Print(floor)
+	//	log.Print(floor)
 
 	assert.True(floor.coversRectangle(redTile{7, 3}, redTile{11, 1}))
 	assert.False(floor.coversRectangle(redTile{6, 3}, redTile{11, 1}))
