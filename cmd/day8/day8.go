@@ -106,4 +106,24 @@ func main() {
 	log.Println(circuitSizes)
 	fmt.Println(circuitSizes[0] * circuitSizes[1] * circuitSizes[2])
 
+	for n := 1000; ; n++ {
+		i := pd[n].i
+		j := pd[n].j
+		if jb[i].c != jb[j].c {
+			connect(i, j, jb)
+		}
+		circuitSize := determineCircuitSizes(jb)
+		if len(circuitSize) == 1 {
+			log.Println(n)
+			fmt.Println(jb[i].x * jb[j].x)
+			return
+		}
+	}
+
+	//	2025/12/09 23:11:38 Iteration #998
+	//
+	// 2025/12/09 23:11:38 connect 200 and 885
+	// 2025/12/09 23:11:38 change index 200 from circuit 200 to circuit 0
+	// 2025/12/09 23:11:38 [1000]
+	// 2025/12/09 23:11:38 [1000]
 }
